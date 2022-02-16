@@ -5,9 +5,13 @@ import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:gap/gap.dart';
 
+import '../bloc/dashatar_puzzle_bloc.dart';
 import '../bloc/dashatar_theme_bloc.dart';
 import '../bloc/puzzle_bloc.dart';
 import '../keys.dart';
+import '../themes/dashatar/blue_dashatar_theme.dart';
+import '../themes/dashatar/green_dashatar_theme.dart';
+import '../themes/dashatar/yellow_dashatar_theme.dart';
 import '../themes/simple_theme.dart';
 import '../widgets/widgets.dart';
 
@@ -25,37 +29,37 @@ class PuzzlePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (_) => DashatarThemeBloc(
-        //     themes: const [
-        //       BlueDashatarTheme(),
-        //       GreenDashatarTheme(),
-        //       YellowDashatarTheme()
-        //     ],
-        //   ),
-        // ),
-        // BlocProvider(
-        //   create: (_) => DashatarPuzzleBloc(
-        //     secondsToBegin: 3,
-        //     ticker: const Ticker(),
-        //   ),
-        // ),
-        // BlocProvider(
-        //   create: (context) => ThemeBloc(
-        //     initialThemes: [
-        //       const SimpleTheme(),
-        //       context.read<DashatarThemeBloc>().state.theme,
-        //     ],
-        //   ),
-        // ),
+        BlocProvider(
+          create: (_) => DashatarThemeBloc(
+            themes: const [
+              BlueDashatarTheme(),
+              GreenDashatarTheme(),
+              YellowDashatarTheme()
+            ],
+          ),
+        ),
+        BlocProvider(
+          create: (_) => DashatarPuzzleBloc(
+            secondsToBegin: 3,
+            ticker: const Ticker(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ThemeBloc(
+            initialThemes: [
+              const SimpleTheme(),
+              context.read<DashatarThemeBloc>().state.theme,
+            ],
+          ),
+        ),
         BlocProvider(
           create: (_) => TimerBloc(
             ticker: const Ticker(),
           ),
         ),
-        // BlocProvider(
-        //   create: (_) => AudioControlBloc(),
-        // ),
+        BlocProvider(
+          create: (_) => AudioControlBloc(),
+        ),
       ],
       child: const PuzzleView(),
     );
