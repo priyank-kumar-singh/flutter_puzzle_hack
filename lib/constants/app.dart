@@ -3,7 +3,7 @@ import 'asset.dart';
 class AppInfo {
   AppInfo._();
 
-  //TODO: Edit App Details
+  //TODO: Remove this file
   static const name = 'My Flutter App';
   static const homeTitle = name;
 

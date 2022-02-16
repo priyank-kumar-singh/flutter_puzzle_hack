@@ -1,3 +1,0 @@
-class RouteHandler {
-  RouteHandler._();
-}

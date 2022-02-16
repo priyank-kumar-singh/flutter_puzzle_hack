@@ -1,3 +1,0 @@
-class RestAPI {
-  RestAPI._();
-}

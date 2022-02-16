@@ -13,12 +13,31 @@ class MessageBubble extends StatelessWidget {
   }) : assert(fontSize == null || textStyle == null),
     super(key: key);
 
+  /// Text to be displayed inside the message box
   final String text;
+
+  /// Determines whether the cone at the bottom of the message box is at left side or right side
+  ///
+  /// By default [ltr] is true means cone is at bottom left side of the message box
   final bool ltr;
+
+  /// Background color of message box
   final Color fillColor;
+
+  /// Text style of the message inside the message box.
+  ///
+  /// [textStyle] should be null if [fontSize] is provided
   final TextStyle? textStyle;
+
+  /// Font size of the message inside the message box
+  ///
+  /// [fontSize] should be null if [textStyle] is provided
   final double? fontSize;
+
+  /// Padding for the content inside message box
   final EdgeInsetsGeometry? padding;
+
+  /// Margin of the message box
   final EdgeInsetsGeometry? margin;
 
   @override
@@ -61,23 +80,15 @@ class _BubblePainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    final path = Path();
     final height = size.height;
-    final width = size.width;
+    final width = ltr ? 0 : size.width;
+    final sign = ltr ? -1 : 1;
 
-    if (ltr) {
-      path
-        ..moveTo(-dx, height + dy)
-        ..quadraticBezierTo(-dx/4, (height + dx/2), 1, height - dx)
-        ..lineTo(dx / 2, height)
-        ..quadraticBezierTo(-dx/4, (height + dx/1.8), -dx, height + dy);
-    } else {
-      path
-        ..moveTo(width + dx, height + dy)
-        ..quadraticBezierTo(width + dx/4, (height + dx/2), width - 1, height - dx)
-        ..lineTo(width - dx/2, height)
-        ..quadraticBezierTo(width + dx/4, (height + dx/1.8), width + dx, height + dy);
-    }
+    final path = Path()
+      ..moveTo(width + sign * dx, height + dy)
+      ..quadraticBezierTo(width + sign * dx/4, (height + dx/2), width - sign * 1, height - dx,)
+      ..lineTo(width - dx/2, height)
+      ..quadraticBezierTo(width + sign * dx/4, (height + dx/1.8), width + sign * dx, height + dy);
 
     canvas.drawPath(path, paint);
   }
