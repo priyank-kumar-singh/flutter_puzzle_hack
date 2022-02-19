@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_puzzle_hack/config/config.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
+import '../animation.dart';
+
 /// {@template number_of_moves_and_tiles_left}
 /// Displays how many moves have been made on the current puzzle
 /// and how many puzzle tiles are not in their correct position.
@@ -62,14 +64,14 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
                   style: ThemeConstants.headline4.copyWith(
                     color: textColor,
                   ),
-                  duration: AnimationDuration.textStyle,
+                  duration: PuzzleAnimation.textStyle,
                   child: Text(numberOfMoves.toString()),
                 ),
                 AnimatedDefaultTextStyle(
                   style: bodyTextStyle.copyWith(
                     color: textColor,
                   ),
-                  duration: AnimationDuration.textStyle,
+                  duration: PuzzleAnimation.textStyle,
                   child: Text(' ${l10n.puzzleNumberOfMoves} | '),
                 ),
                 AnimatedDefaultTextStyle(
@@ -77,14 +79,14 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
                   style: ThemeConstants.headline4.copyWith(
                     color: textColor,
                   ),
-                  duration: AnimationDuration.textStyle,
+                  duration: PuzzleAnimation.textStyle,
                   child: Text(numberOfTilesLeft.toString()),
                 ),
                 AnimatedDefaultTextStyle(
                   style: bodyTextStyle.copyWith(
                     color: textColor,
                   ),
-                  duration: AnimationDuration.textStyle,
+                  duration: PuzzleAnimation.textStyle,
                   child: Text(' ${l10n.puzzleNumberOfTilesLeft}'),
                 ),
               ],

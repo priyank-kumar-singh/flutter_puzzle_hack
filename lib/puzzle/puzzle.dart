@@ -1,8 +1,11 @@
-export 'layout/dashatar_puzzle_layout_delegate.dart';
-export 'layout/puzzle_layout_delegate.dart';
-export 'layout/simple_puzzle_layout_delegate.dart';
+export 'bloc/puzzle_bloc.dart';
+export 'bloc/my_puzzle_bloc.dart';
+export 'bloc/theme_bloc.dart';
 
-export 'themes/dashatar/dashatar_theme.dart';
-export 'themes/simple_theme.dart';
+export 'provider/provider.dart';
+export 'view/puzzle.dart';
+export 'widgets/widgets.dart';
 
-export 'view/puzzle_page.dart';
+export 'animation.dart';
+export 'puzzle_theme.dart';
+export 'layout_delegate.dart';

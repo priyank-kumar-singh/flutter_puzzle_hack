@@ -3,7 +3,7 @@ part of 'theme_bloc.dart';
 class ThemeState extends Equatable {
   const ThemeState({
     required this.themes,
-    this.theme = const SimpleTheme(),
+    required this.theme,
   });
 
   /// The list of all available themes.

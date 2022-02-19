@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 import 'config/config.dart';
+import 'constants/asset.dart';
 import 'puzzle/puzzle.dart';
 import 'util/utils.dart';
 
@@ -61,22 +62,10 @@ class _MyAppState extends State<MyApp> {
   static const localAssetsPrefix = 'assets/';
 
   static final audioControlAssets = [
-    'assets/images/audio_control/simple_on.png',
-    'assets/images/audio_control/simple_off.png',
-    'assets/images/audio_control/dashatar_on.png',
-    'assets/images/audio_control/green_dashatar_off.png',
-    'assets/images/audio_control/blue_dashatar_off.png',
-    'assets/images/audio_control/yellow_dashatar_off.png',
-  ];
-
-  static final audioAssets = [
-    'assets/audio/shuffle.mp3',
-    'assets/audio/click.mp3',
-    'assets/audio/dumbbell.mp3',
-    'assets/audio/sandwich.mp3',
-    'assets/audio/skateboard.mp3',
-    'assets/audio/success.mp3',
-    'assets/audio/tile_move.mp3',
+    'assets/images/volume_on.png',
+    'assets/images/volume_off_blue.png',
+    'assets/images/volume_off_green.png',
+    'assets/images/volume_off_yellow.png',
   ];
 
   late final PlatformHelper _platformHelper;
@@ -88,93 +77,48 @@ class _MyAppState extends State<MyApp> {
 
     _platformHelper = widget._platformHelperFactory();
 
-    _timer = Timer(const Duration(milliseconds: 20), () {
-      for (var i = 1; i <= 15; i++) {
-        precacheImage(
-          Image.asset('assets/images/dashatar/green/$i.png').image,
-          context,
-        );
-        precacheImage(
-          Image.asset('assets/images/dashatar/blue/$i.png').image,
-          context,
-        );
-        precacheImage(
-          Image.asset('assets/images/dashatar/yellow/$i.png').image,
-          context,
-        );
-      }
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/green.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/green.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/blue.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/blue.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/gallery/yellow.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/dashatar/success/yellow.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/logo_flutter_color.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/logo_flutter_white.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/shuffle_icon.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/timer_icon.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_large.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_medium.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/simple_dash_small.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/twitter_icon.png').image,
-        context,
-      );
-      precacheImage(
-        Image.asset('assets/images/facebook_icon.png').image,
-        context,
-      );
+    if (_platformHelper.isWeb) {
+      _timer = Timer(const Duration(milliseconds: 20), () {
+        for (var num = 1; num <= 15; num++) {
+          for (var color in ['green', 'blue', 'yellow']) {
+            precacheImage(
+              Image.asset(AssetImages.dashatar + '$color/$num.png').image,
+              context,
+            );
+            precacheImage(
+              Image.asset(AssetImages.dashatar + '$color.png').image,
+              context,
+            );
+            precacheImage(
+              Image.asset(AssetImages.dashatar + '${color}_success.png').image,
+              context,
+            );
+          }
+        }
 
-      for (final audioControlAsset in audioControlAssets) {
-        precacheImage(
-          Image.asset(audioControlAsset).image,
-          context,
-        );
-      }
+        for (var size in ['small', 'medium', 'large']) {
+          precacheImage(
+            Image.asset(AssetImages.simple_dash + '$size.png').image,
+            context,
+          );
+        }
 
-      for (final audioAsset in audioAssets) {
-        prefetchToMemory(audioAsset);
-      }
-    });
+        for (final asset in audioControlAssets) {
+          precacheImage(
+            Image.asset(asset).image,
+            context,
+          );
+        }
+
+        for (final asset in AssetAudios.all) {
+          prefetchToMemory(asset);
+        }
+
+        for (final asset in AssetIcons.all) {
+          precacheImage(Image.asset(asset).image, context);
+        }
+      });
+    }
   }
 
   /// Prefetches the given [filePath] to memory.

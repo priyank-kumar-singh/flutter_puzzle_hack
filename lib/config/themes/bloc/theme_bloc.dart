@@ -1,15 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_puzzle_hack/puzzle/puzzle.dart';
-
-import '../puzzle_theme.dart';
+import 'package:flutter_puzzle_hack/puzzle/puzzle_theme.dart';
 
 part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  ThemeBloc({required List<PuzzleTheme> initialThemes})
-      : super(ThemeState(themes: initialThemes)) {
+  ThemeBloc({required PuzzleTheme initialTheme, required List<PuzzleTheme> themes})
+      : super(ThemeState(themes: themes, theme: initialTheme)) {
     on<ThemeChanged>(_onThemeChanged);
     on<ThemeUpdated>(_onThemeUpdated);
   }

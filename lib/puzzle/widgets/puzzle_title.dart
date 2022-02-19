@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_puzzle_hack/config/config.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
+import '../animation.dart';
+
 /// {@template puzzle_title}
 /// Displays the title of the puzzle in the given color.
 /// {@endtemplate}
@@ -53,7 +55,7 @@ class PuzzleTitle extends StatelessWidget {
 
         return AnimatedDefaultTextStyle(
           style: textStyle,
-          duration: AnimationDuration.textStyle,
+          duration: PuzzleAnimation.textStyle,
           child: Text(
             title,
             textAlign: textAlign,

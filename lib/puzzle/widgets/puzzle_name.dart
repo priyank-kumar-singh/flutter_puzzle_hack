@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_puzzle_hack/config/config.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
+import '../animation.dart';
+
 /// {@template puzzle_name}
 /// Displays the name of the current puzzle theme.
 /// Visible only on a large layout.
@@ -29,7 +31,7 @@ class PuzzleName extends StatelessWidget {
         style: ThemeConstants.headline5.copyWith(
           color: nameColor,
         ),
-        duration: AnimationDuration.textStyle,
+        duration: PuzzleAnimation.textStyle,
         child: Text(
           theme.name,
           key: const Key('puzzle_name_theme'),
