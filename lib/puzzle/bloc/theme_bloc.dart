@@ -13,10 +13,10 @@ class PuzzleThemeBloc extends Bloc<PuzzleThemeEvent, PuzzleThemeState> {
   /// {@macro dashatar_theme_bloc}
   PuzzleThemeBloc({required PuzzleTheme inititalTheme, required List<PuzzleTheme> themes})
       : super(PuzzleThemeState(theme: inititalTheme, themes: themes)) {
-    on<PuzzleThemeChanged>(_onDashatarThemeChanged);
+    on<PuzzleThemeChanged>(_onThemeChanged);
   }
 
-  void _onDashatarThemeChanged(
+  void _onThemeChanged(
     PuzzleThemeChanged event,
     Emitter<PuzzleThemeState> emit,
   ) {

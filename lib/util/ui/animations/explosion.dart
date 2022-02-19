@@ -6,6 +6,7 @@ class ExplodeAnimation extends StatefulWidget {
     required this.child,
     required this.color,
     required this.triggerAnimation,
+    this.repeatOnUpdate = false,
     this.rings = 5,
     this.duration = 3000,
   }) : super(key: key);
@@ -14,6 +15,7 @@ class ExplodeAnimation extends StatefulWidget {
   final Color color;
   final int duration;
   final double rings;
+  final bool repeatOnUpdate;
   final bool triggerAnimation;
 
   @override
@@ -23,7 +25,9 @@ class ExplodeAnimation extends StatefulWidget {
 class _ExplodeAnimationState extends State<ExplodeAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late final _ExplodeAnimation _animation;
+  late final Animation<double> _holeAnimation;
+
+  static const maximumHoleSize = 10.0;
 
   @override
   void initState() {
@@ -32,12 +36,21 @@ class _ExplodeAnimationState extends State<ExplodeAnimation>
       duration: Duration(milliseconds: widget.duration),
       vsync: this,
     );
-    _animation = _ExplodeAnimation(_controller);
+    _holeAnimation = Tween<double>(begin: 0, end: maximumHoleSize).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
+      ),
+    );
   }
 
   @override
   void didUpdateWidget(covariant ExplodeAnimation oldWidget) {
-    if (widget.triggerAnimation) {
+    if (widget.triggerAnimation && widget.repeatOnUpdate) {
+      _controller
+        ..reset()
+        ..forward();
+    } else if (!oldWidget.triggerAnimation && widget.triggerAnimation) {
       _controller.forward();
     }
     super.didUpdateWidget(oldWidget);
@@ -63,7 +76,7 @@ class _ExplodeAnimationState extends State<ExplodeAnimation>
                   painter: _ExplosionPainter(
                     rings: widget.rings,
                     color: widget.color,
-                    holeSize: _animation.holeSize.value * constraints.maxWidth,
+                    holeSize: _holeAnimation.value * constraints.maxWidth,
                   ),
                 ),
               ),
@@ -74,20 +87,6 @@ class _ExplodeAnimationState extends State<ExplodeAnimation>
       );
     });
   }
-}
-
-class _ExplodeAnimation {
-  _ExplodeAnimation(this.controller)
-      : holeSize = Tween<double>(begin: 0, end: maximumHoleSize).animate(
-          CurvedAnimation(
-            parent: controller,
-            curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
-          ),
-        );
-
-  final AnimationController controller;
-  final Animation<double> holeSize;
-  static const maximumHoleSize = 20.0;
 }
 
 class _ExplosionPainter extends CustomPainter {

@@ -1,2 +1,2 @@
 export 'dashatar/theme.dart';
-export 'cockroaches/theme.dart';
+export 'cockroach/theme.dart';

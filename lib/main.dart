@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_puzzle_hack/themes/themes.dart';
 import 'package:http/http.dart' as http;
 
 import 'config/config.dart';
@@ -148,7 +149,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => context.l10n.puzzleChallengeTitle,
-      home: const PuzzlePage(),
+      home: const Dashboard(),
     );
   }
 }

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_puzzle_hack/util/ui/animations/explosion.dart';
-import 'package:rive/rive.dart';
-
 import 'package:flutter_puzzle_hack/constants/asset.dart';
+import 'package:flutter_puzzle_hack/util/utils.dart';
+import 'package:rive/rive.dart';
 
 import 'bloc/bomb_bloc.dart';
 
@@ -14,31 +13,26 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BombBloc(),
-      child: const _DashboardView(),
+      child: _DashboardView(),
     );
   }
 }
 
-class _DashboardView extends StatefulWidget {
-  const _DashboardView({Key? key}) : super(key: key);
+class _DashboardView extends StatelessWidget {
+  void play(BuildContext context) {
+    context.read<BombBloc>().add(const BombPlay());
+  }
 
-  @override
-  State<_DashboardView> createState() => _DashboardViewState();
-}
+  void explode(BuildContext context) {
+    context.read<BombBloc>().add(const BombExplode());
+  }
 
-class _DashboardViewState extends State<_DashboardView> {
-  void onRiveInit(BuildContext context, Artboard artboard) {
-    final controller = StateMachineController.fromArtboard(
-      artboard, 'state_machine_1', onStateChange: ((machine, state) {
-        // context.read<BombBloc>().add(BombStateChange(state));
-      }));
-    artboard.addController(controller!);
-    context.read<BombBloc>().play = controller.findInput<bool>('play') as SMITrigger;
-    context.read<BombBloc>().explode = controller.findInput<bool>('explode') as SMITrigger;
-    context.read<BombBloc>().stop = controller.findInput<bool>('stop') as SMITrigger;
-    context.read<BombBloc>().reset = controller.findInput<bool>('reset') as SMITrigger;
+  void stop(BuildContext context) {
+    context.read<BombBloc>().add(const BombStop());
+  }
 
-    controller.findInput<bool>('black_residue')?.value = true;
+  void reset(BuildContext context) {
+    context.read<BombBloc>().add(const BombReset());
   }
 
   @override
@@ -54,12 +48,13 @@ class _DashboardViewState extends State<_DashboardView> {
               child: ExplodeAnimation(
                 duration: 2000,
                 rings: 3,
-                triggerAnimation: context.read<BombBloc>().state is BombExit,
+                triggerAnimation: context.select<BombBloc, bool>((bloc) => bloc.state.status == BombStatus.exit),
+                repeatOnUpdate: true,
                 color: Colors.redAccent,
                 child: RiveAnimation.asset(
                   AssetRiveAnims.bomb,
                   stateMachines: const ['state_machine_1'],
-                  onInit: (artboard) => onRiveInit(context, artboard),
+                  onInit: context.read<BombBloc>().registerTriggers,
                 ),
               ),
             ),
@@ -74,30 +69,22 @@ class _DashboardViewState extends State<_DashboardView> {
                   FloatingActionButton(
                     child: const Icon(Icons.play_arrow),
                     tooltip: 'Play',
-                    onPressed: () {
-                      context.read<BombBloc>().add(const BombTrigger('play'));
-                    },
+                    onPressed: () => play(context),
                   ),
                   FloatingActionButton(
                     child: const Icon(Icons.personal_injury_rounded),
                     tooltip: 'Explode',
-                    onPressed: () {
-                      context.read<BombBloc>().add(const BombTrigger('explode'));
-                    },
+                    onPressed: () => explode(context),
                   ),
                   FloatingActionButton(
                     child: const Icon(Icons.stop),
                     tooltip: 'Stop',
-                    onPressed: () {
-                      context.read<BombBloc>().add(const BombTrigger('stop'));
-                    },
+                    onPressed: () => stop(context),
                   ),
                   FloatingActionButton(
                     child: const Icon(Icons.replay_outlined),
                     tooltip: 'Reset',
-                    onPressed: () {
-                      context.read<BombBloc>().add(const BombTrigger('reset'));
-                    },
+                    onPressed: () => reset(context),
                   ),
                 ],
               ),
