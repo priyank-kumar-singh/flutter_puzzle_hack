@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// {@template animated_text_button}
-/// Variant of [TextButton] with an animated [style].
-/// {@endtemplate}
 class AnimatedTextButton extends ImplicitlyAnimatedWidget {
-  /// {@macro animated_text_button}
   const AnimatedTextButton({
     Key? key,
     required this.child,

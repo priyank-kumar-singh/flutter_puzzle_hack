@@ -1,7 +1,7 @@
 part of 'puzzle.dart';
 
-class PuzzleHeader extends StatelessWidget {
-  const PuzzleHeader({Key? key}) : super(key: key);
+class _PuzzleHeader extends StatelessWidget {
+  const _PuzzleHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class PuzzleHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               AppTitle(),
-              PuzzleMenu(),
+              _PuzzleMenu(),
             ],
           ),
         ),
@@ -42,7 +42,7 @@ class PuzzleHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
               AppTitle(),
-              PuzzleMenu(),
+              _PuzzleMenu(),
             ],
           ),
         ),

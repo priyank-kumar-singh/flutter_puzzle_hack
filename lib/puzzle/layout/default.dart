@@ -3,6 +3,7 @@ import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
 import '../bloc/puzzle_bloc.dart';
+import '../provider/provider.dart';
 import '../widgets/widgets.dart';
 import 'template.dart';
 
@@ -10,9 +11,9 @@ import 'template.dart';
 /// A delegate for computing the layout of the puzzle UI
 /// that uses a [Theme].
 /// {@endtemplate}
-class DefaultPuzzleLayout extends PuzzleLayoutDelegate {
+class MyPuzzleLayout extends PuzzleLayoutDelegate {
   /// {@macro puzzle_layout_delegate}
-  const DefaultPuzzleLayout();
+  const MyPuzzleLayout();
 
   @override
   Widget startSectionBuilder(PuzzleState state) {
@@ -53,7 +54,20 @@ class DefaultPuzzleLayout extends PuzzleLayoutDelegate {
 
   @override
   Widget backgroundBuilder(PuzzleState state) {
-    return const SizedBox();
+    return Stack(
+      children: [
+        const RiveBackground(),
+        Positioned(
+          bottom: 74,
+          right: 50,
+          child: ResponsiveLayoutBuilder(
+            small: (_, child) => const SizedBox(),
+            medium: (_, child) => const SizedBox(),
+            large: (_, child) => const RiveAnchor(),
+          ),
+        ),
+      ],
+    );
   }
 
   @override

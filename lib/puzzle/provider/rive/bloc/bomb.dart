@@ -2,9 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rive/rive.dart';
 
-part 'bomb_event.dart';
-part 'bomb_state.dart';
-
 class BombBloc extends Bloc<BombEvent, _BombState> {
   SMITrigger? _play, _explode, _stop, _reset;
 
@@ -58,4 +55,46 @@ class BombBloc extends Bloc<BombEvent, _BombState> {
     _reset?.fire();
     emit(const _BombState(BombState.idle));
   }
+}
+
+// Bomb bloc events
+abstract class BombEvent extends Equatable {
+  const BombEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
+class BombPlay extends BombEvent {
+  const BombPlay();
+}
+
+class BombExplode extends BombEvent {
+  const BombExplode();
+}
+
+class BombStop extends BombEvent {
+  const BombStop({this.fireMethod = true});
+
+  final bool fireMethod;
+
+  @override
+  List<Object> get props => [fireMethod];
+}
+
+class BombReset extends BombEvent {
+  const BombReset();
+}
+
+
+// Bomb bloc states
+enum BombState { idle, play, explode, exit }
+
+class _BombState extends Equatable {
+  const _BombState(this.status);
+
+  final BombState status;
+
+  @override
+  List<Object> get props => [status];
 }

@@ -12,12 +12,18 @@ import '../layout/template.dart';
 /// Template for creating custom puzzle UI.
 /// {@endtemplate}
 abstract class PuzzleTheme extends Equatable {
-  PuzzleTheme() {
+  PuzzleTheme({List<String>? storyline, List<String>? endStory}) {
     _tiles = ImageHelper.split(themeAsset, gridSize);
+    this.storyline = storyline ?? [];
+    this.endStory = endStory ?? [];
   }
 
   // List of splitted tile images
   late final List<Uint8List> _tiles;
+
+  late final List<String> storyline;
+
+  late final List<String> endStory;
 
   /// The display name of this theme.
   String get name;
@@ -117,7 +123,7 @@ abstract class PuzzleTheme extends Equatable {
   /// The puzzle layout delegate of this theme.
   ///
   /// Used for building sections of the puzzle UI.
-  PuzzleLayoutDelegate get layoutDelegate => const DefaultPuzzleLayout();
+  PuzzleLayoutDelegate get layoutDelegate => const MyPuzzleLayout();
 
   // Grid Size
   int get gridSize => 4;

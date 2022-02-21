@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_puzzle_hack/config/config.dart';
 import 'package:flutter_puzzle_hack/puzzle/puzzle.dart';
 
-import 'layout.dart';
-
 export 'halloween.dart';
 
-abstract class ThemeOne extends PuzzleTheme {
-  ThemeOne() : super();
+abstract class ThemeX extends PuzzleTheme {
+  ThemeX() : super();
 
   @override
   Color get nameColor => Colors.white;
@@ -38,7 +36,4 @@ abstract class ThemeOne extends PuzzleTheme {
 
   @override
   Color get audioControlOn => Colors.white;
-
-  @override
-  PuzzleLayoutDelegate get layoutDelegate => const HalloweenLayout();
 }

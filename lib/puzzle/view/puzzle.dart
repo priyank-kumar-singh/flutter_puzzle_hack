@@ -6,7 +6,7 @@ import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:gap/gap.dart';
 
-import '../../themes/themes.dart';
+import '../../themes/theme.dart';
 import '../bloc/puzzle_bloc.dart';
 import '../provider/provider.dart';
 import '../theme/theme.dart';
@@ -57,7 +57,10 @@ class PuzzlePage extends StatelessWidget {
           create: (_) => BombBloc(),
         ),
         BlocProvider(
-          create: (_) => RivebackgroundBloc(),
+          create: (_) => RiveBackgroundBloc(),
+        ),
+        BlocProvider(
+          create: (_) => RiveAnchorBloc(),
         ),
       ],
       child: const _PuzzleView(),
@@ -76,42 +79,24 @@ class _PuzzleView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
 
-    /// Shuffle only if the current theme is Simple.
-    const shufflePuzzle = false;
-
     return Scaffold(
       body: AnimatedContainer(
         duration: PuzzleAnimation.backgroundColorChange,
         decoration: BoxDecoration(color: theme.backgroundColor),
-        child: MultiBlocListener(
-          listeners: const [
-            // TODO: Add other theme listerners here
-            // BlocListener<ThemeBloc, ThemeState>(
-            //   listener: (context, state) {
-            //     // final theme = context.read<MyThemeBlocOne>().state.theme;
-            //     // context.read<ThemeBloc>().add(ThemeUpdated(theme: theme));
-            //   },
-            // ),
-          ],
-          child: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => TimerBloc(
-                  ticker: const Ticker(),
-                ),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => TimerBloc(
+                ticker: const Ticker(),
               ),
-              BlocProvider(
-                create: (context) => PuzzleBloc(theme.gridSize)
-                  ..add(
-                    const PuzzleInitialized(
-                      shufflePuzzle: shufflePuzzle,
-                    ),
-                  ),
-              ),
-            ],
-            child: const _Puzzle(
-              key: Key('puzzle_view'),
             ),
+            BlocProvider(
+              create: (context) => PuzzleBloc(theme.gridSize)
+                ..add(const PuzzleInitialized(shufflePuzzle: false)),
+            ),
+          ],
+          child: const _Puzzle(
+            key: Key('puzzle_view'),
           ),
         ),
       ),
@@ -127,22 +112,26 @@ class _Puzzle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final state = context.select((PuzzleBloc bloc) => bloc.state);
+    final background = context.select((RiveBackgroundBloc bloc) => bloc.state is RivebackgroundFinal);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         return Stack(
           children: [
             theme.layoutDelegate.backgroundBuilder(state),
-            SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: Column(
-                  children: const [
-                    PuzzleHeader(),
-                    _PuzzleSections(),
-                  ],
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 2000),
+              child: !background ? null : SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Column(
+                    children: const [
+                      _PuzzleHeader(),
+                      _PuzzleSections(),
+                    ],
+                  ),
                 ),
               ),
             ),

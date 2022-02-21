@@ -77,7 +77,8 @@ class _PuzzleActionButtonState
 
                     // Reset the timer and the countdown.
                     context.read<TimerBloc>().add(const TimerReset());
-                    context.read<CountdownBloc>().add(const CountdownReset());
+                    // context.read<CountdownBloc>().add(const CountdownReset());
+                    context.read<RiveAnchorBloc>().add(const RiveAnchorPlay());
 
                     // Initialize the puzzle board to show the initial puzzle
                     // (unshuffled) before the countdown completes.

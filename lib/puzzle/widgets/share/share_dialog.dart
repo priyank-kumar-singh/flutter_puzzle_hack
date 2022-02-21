@@ -6,8 +6,6 @@ import 'package:flutter_puzzle_hack/puzzle/puzzle.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:just_audio/just_audio.dart';
 
-import 'score.dart';
-
 /// {@template dashatar_share_dialog}
 /// Displays a Dashatar share dialog with a score of the completed puzzle
 /// and an option to share the score using Twitter or Facebook.

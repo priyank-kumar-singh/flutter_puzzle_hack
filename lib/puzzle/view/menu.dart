@@ -1,7 +1,7 @@
 part of 'puzzle.dart';
 
-class PuzzleMenu extends StatelessWidget {
-  const PuzzleMenu({Key? key}) : super(key: key);
+class _PuzzleMenu extends StatelessWidget {
+  const _PuzzleMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

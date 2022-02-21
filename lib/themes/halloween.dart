@@ -4,8 +4,16 @@ import 'package:flutter_puzzle_hack/constants/const.dart';
 
 import 'theme.dart';
 
-class Halloween extends ThemeOne {
-  Halloween() : super();
+class Halloween extends ThemeX {
+  Halloween() : super() {
+    storyline.addAll([
+      'Hello I\'m Laszlo.',
+      'The witch attacked me and made me a bat.\nWill you help, please?',
+      'Thanks! Now listen Carefully...',
+      'In order to revert witch\'s magic we need to first call our friendly ghost - Gia.',
+      'I just found out she\'s been captured and locked. You need arrange all the pieces of the puzzle to free her.',
+    ]);
+  }
 
   @override
   String get name => 'Halloween';

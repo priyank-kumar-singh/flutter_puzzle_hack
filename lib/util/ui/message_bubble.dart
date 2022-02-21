@@ -1,25 +1,25 @@
 import 'package:flutter/widgets.dart';
 
 class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-    this.text, {
+  const MessageBubble({
     Key? key,
-    this.ltr = true,
+    this.text,
+    this.child,
     this.fillColor = const Color.fromARGB(255, 245, 237, 170),
     this.textStyle,
     this.fontSize,
     this.margin,
     this.padding,
   }) : assert(fontSize == null || textStyle == null),
+    assert(text != null || child != null),
+    assert(text == null || child == null),
     super(key: key);
 
   /// Text to be displayed inside the message box
-  final String text;
+  final String? text;
 
-  /// Determines whether the cone at the bottom of the message box is at left side or right side
-  ///
-  /// By default [ltr] is true means cone is at bottom left side of the message box
-  final bool ltr;
+  /// Child widget to be displyed in the message box
+  final Widget? child;
 
   /// Background color of message box
   final Color fillColor;
@@ -43,10 +43,10 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: _BubblePainter(fillColor, ltr),
+      painter: _BubblePainter(fillColor),
       child: Container(
-        child: Text(
-          text,
+        child: child ?? Text(
+          text!,
           style: textStyle ?? TextStyle(
             fontSize: fontSize,
           ),
@@ -67,12 +67,11 @@ class MessageBubble extends StatelessWidget {
 
 class _BubblePainter extends CustomPainter {
   final Color color;
-  final bool ltr;
 
-  _BubblePainter(this.color, this.ltr);
+  _BubblePainter(this.color);
 
-  static const dx = 14.0;
-  static const dy = dx / 1.2;
+  static const dx = 10.0;
+  static const dy = dx / 0.6;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -80,15 +79,15 @@ class _BubblePainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill;
 
-    final height = size.height;
-    final width = ltr ? 0 : size.width;
-    final sign = ltr ? -1 : 1;
+    final height = size.height - 2.0;
+    final widthHalf = size.width / 2;
 
     final path = Path()
-      ..moveTo(width + sign * dx, height + dy)
-      ..quadraticBezierTo(width + sign * dx/4, (height + dx/2), width - sign * 1, height - dx,)
-      ..lineTo(width - dx/2, height)
-      ..quadraticBezierTo(width + sign * dx/4, (height + dx/1.8), width + sign * dx, height + dy);
+      ..moveTo(widthHalf - dx, height)
+      ..lineTo(widthHalf - dx/5, height + dy - 4.0)
+      ..quadraticBezierTo(widthHalf, height + dy, widthHalf + dx/5, height + dy - 4.0)
+      ..lineTo(widthHalf + dx, height)
+      ..lineTo(widthHalf - dx, height);
 
     canvas.drawPath(path, paint);
   }

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class ThemeConstants {
-  static const lightThemePrimaryColor = Color(0xFF0B4AAA);
-  static const lightThemeSecondaryColor = Color(0xFFF0EFEF);
-
   static const errorColor = Colors.redAccent;
   static const snackBarActionColor = Colors.purple;
 
