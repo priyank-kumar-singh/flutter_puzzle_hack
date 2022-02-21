@@ -1,10 +1,9 @@
-// ignore_for_file: public_member_api_docs
-
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_puzzle_hack/models/models.dart';
+
+import '../../models/models.dart';
 
 part 'puzzle_event.dart';
 part 'puzzle_state.dart';

@@ -1,2 +1,3 @@
-export 'dashatar/theme.dart';
-export 'cockroach/theme.dart';
+export 'bloc/theme_bloc.dart';
+
+export 'halloween/theme.dart';

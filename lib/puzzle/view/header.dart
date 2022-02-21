@@ -1,11 +1,6 @@
 part of 'puzzle.dart';
 
-/// {@template puzzle_header}
-/// Displays the header of the puzzle.
-/// {@endtemplate}
-@visibleForTesting
 class PuzzleHeader extends StatelessWidget {
-  /// {@macro puzzle_header}
   const PuzzleHeader({Key? key}) : super(key: key);
 
   @override
@@ -16,13 +11,13 @@ class PuzzleHeader extends StatelessWidget {
         small: (context, child) => Stack(
           children: [
             const Align(
-              child: PuzzleLogo(),
+              child: AppTitle(),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.only(right: 34),
-                child: AudioControl(key: audioControlKey),
+                child: AudioControl(key: Keys.audioControlKey),
               ),
             ),
           ],
@@ -34,7 +29,7 @@ class PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              PuzzleLogo(),
+              AppTitle(),
               PuzzleMenu(),
             ],
           ),
@@ -46,31 +41,12 @@ class PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              PuzzleLogo(),
+              AppTitle(),
               PuzzleMenu(),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-/// {@template puzzle_logo}
-/// Displays the logo of the puzzle.
-/// {@endtemplate}
-@visibleForTesting
-class PuzzleLogo extends StatelessWidget {
-  /// {@macro puzzle_logo}
-  const PuzzleLogo({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-
-    return AppLogo(
-      key: puzzleLogoKey,
-      isColored: theme.isLogoColored,
     );
   }
 }

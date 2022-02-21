@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'breakpoints.dart';
+import '../../constants/const.dart';
 
 /// Represents the layout size passed to [ResponsiveLayoutBuilder.child].
 enum ResponsiveLayoutSize {

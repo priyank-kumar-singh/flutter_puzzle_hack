@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_puzzle_hack/config/config.dart';
-import 'package:flutter_puzzle_hack/constants/asset.dart';
+import 'package:flutter_puzzle_hack/constants/const.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
-import '../../../animation.dart';
+import '../../../theme/theme.dart';
 import '../bloc/bloc.dart';
 
 /// {@template audio_control}
@@ -17,10 +16,8 @@ class AudioControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
-    final audioMuted =
-        context.select((AudioControlBloc bloc) => bloc.state.muted);
-    final audioAsset =
-        audioMuted ? AssetImages.audio_control_off : AssetImages.audio_control_on;
+    final audioMuted = context.select((AudioControlBloc bloc) => bloc.state.muted);
+    final audioAsset = (audioMuted ? Assets.icons.volumeOff : Assets.icons.volumeOn).path;
     final color = audioMuted ? theme.buttonColor : null;
 
     return MouseRegion(
@@ -35,22 +32,22 @@ class AudioControl extends StatelessWidget {
               audioAsset,
               color: color,
               key: const Key('audio_control_small'),
-              width: 24,
-              height: 24,
+              width: kHeaderButtonSize_small,
+              height: kHeaderButtonSize_small,
             ),
             medium: (_, __) => Image.asset(
               audioAsset,
               color: color,
               key: const Key('audio_control_medium'),
-              width: 33,
-              height: 33,
+              width: kHeaderButtonSize,
+              height: kHeaderButtonSize,
             ),
             large: (_, __) => Image.asset(
               audioAsset,
               color: color,
               key: const Key('audio_control_large'),
-              width: 33,
-              height: 33,
+              width: kHeaderButtonSize,
+              height: kHeaderButtonSize,
             ),
           ),
         ),

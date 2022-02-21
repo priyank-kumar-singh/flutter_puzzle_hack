@@ -1,11 +1,7 @@
 part of 'puzzle.dart';
 
-/// {@template puzzle_sections}
-/// Displays start and end sections of the puzzle.
-/// {@endtemplate}
-class PuzzleSections extends StatelessWidget {
-  /// {@macro puzzle_sections}
-  const PuzzleSections({Key? key}) : super(key: key);
+class _PuzzleSections extends StatelessWidget {
+  const _PuzzleSections({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +13,14 @@ class PuzzleSections extends StatelessWidget {
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
           const PuzzleMenu(),
-          const PuzzleBoard(),
+          const _PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
       medium: (context, child) => Column(
         children: [
           theme.layoutDelegate.startSectionBuilder(state),
-          const PuzzleBoard(),
+          const _PuzzleBoard(),
           theme.layoutDelegate.endSectionBuilder(state),
         ],
       ),
@@ -34,7 +30,7 @@ class PuzzleSections extends StatelessWidget {
           Expanded(
             child: theme.layoutDelegate.startSectionBuilder(state),
           ),
-          const PuzzleBoard(),
+          const _PuzzleBoard(),
           Expanded(
             child: theme.layoutDelegate.endSectionBuilder(state),
           ),

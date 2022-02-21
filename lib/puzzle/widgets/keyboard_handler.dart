@@ -7,7 +7,6 @@ import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../bloc/my_puzzle_bloc.dart';
 import '../bloc/puzzle_bloc.dart';
 import '../provider/provider.dart';
 
@@ -59,7 +58,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
 
     // The user may move tiles only when the puzzle is started.
     // There's no need to check the Simple theme as it is started by default.
-    final canMoveTiles = !(context.read<MyPuzzleBloc>().state.status !=
+    final canMoveTiles = !(context.read<CountdownBloc>().state.status !=
             MyPuzzleStatus.started);
 
     if (event is RawKeyDownEvent && canMoveTiles) {

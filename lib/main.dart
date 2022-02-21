@@ -3,11 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_puzzle_hack/themes/themes.dart';
 import 'package:http/http.dart' as http;
 
 import 'config/config.dart';
-import 'constants/asset.dart';
+import 'constants/const.dart';
 import 'puzzle/puzzle.dart';
 import 'util/utils.dart';
 
@@ -62,13 +61,6 @@ class _MyAppState extends State<MyApp> {
   /// The path to local assets folder.
   static const localAssetsPrefix = 'assets/';
 
-  static final audioControlAssets = [
-    'assets/images/volume_on.png',
-    'assets/images/volume_off_blue.png',
-    'assets/images/volume_off_green.png',
-    'assets/images/volume_off_yellow.png',
-  ];
-
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
 
@@ -79,44 +71,32 @@ class _MyAppState extends State<MyApp> {
     _platformHelper = widget._platformHelperFactory();
 
     if (_platformHelper.isWeb) {
+      final assets = [
+        Assets.icons.volumeOn,
+        Assets.icons.volumeOff,
+      ];
+
+      final assetsMemory = [
+        Assets.audio.click,
+        Assets.audio.dumbbell,
+        Assets.audio.explosion,
+        Assets.audio.sandwich,
+        Assets.audio.shuffle,
+        Assets.audio.skateboard,
+        Assets.audio.sparkel,
+        Assets.audio.success,
+        Assets.audio.tileMove,
+
+        Assets.rive.bomb.path,
+        Assets.rive.dashBird.path,
+      ];
+
       _timer = Timer(const Duration(milliseconds: 20), () {
-        for (var num = 1; num <= 15; num++) {
-          for (var color in ['green', 'blue', 'yellow']) {
-            precacheImage(
-              Image.asset(AssetImages.dashatar + '$color/$num.png').image,
-              context,
-            );
-            precacheImage(
-              Image.asset(AssetImages.dashatar + '$color.png').image,
-              context,
-            );
-            precacheImage(
-              Image.asset(AssetImages.dashatar + '${color}_success.png').image,
-              context,
-            );
-          }
+        for (var asset in assets) {
+          precacheImage(Image.asset(asset.path).image, context);
         }
-
-        for (var size in ['small', 'medium', 'large']) {
-          precacheImage(
-            Image.asset(AssetImages.simple_dash + '$size.png').image,
-            context,
-          );
-        }
-
-        for (final asset in audioControlAssets) {
-          precacheImage(
-            Image.asset(asset).image,
-            context,
-          );
-        }
-
-        for (final asset in AssetAudios.all) {
+        for (var asset in assetsMemory) {
           prefetchToMemory(asset);
-        }
-
-        for (final asset in AssetIcons.all) {
-          precacheImage(Image.asset(asset).image, context);
         }
       });
     }
@@ -149,7 +129,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateTitle: (context) => context.l10n.puzzleChallengeTitle,
-      home: const Dashboard(),
+      home: const PuzzlePage(),
     );
   }
 }

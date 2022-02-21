@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants/asset.dart';
+import '../../../constants/const.dart';
 import '../../helpers/url_launch.dart';
 
 class SocialMediaButton extends InkWell {
@@ -38,7 +38,7 @@ class SocialMediaButton extends InkWell {
                           Radius.circular(iconBorderRadius ?? 4.0)),
                       child: Image(
                           image: AssetImage(
-                              '${Assets.icons}/${icon.toLowerCase()}.png')),
+                              '${AssetPath.icons}${icon.toLowerCase()}.png')),
                     ),
                     iconSize: iconSize ?? 24.0,
                     splashRadius: splashRadius,

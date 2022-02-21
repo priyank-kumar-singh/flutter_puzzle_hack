@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_puzzle_hack/config/config.dart';
-import 'package:flutter_puzzle_hack/constants/keys.dart';
+import 'package:flutter_puzzle_hack/constants/const.dart';
 import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:gap/gap.dart';
 
 import '../../themes/themes.dart';
-import '../animation.dart';
-import '../bloc/my_puzzle_bloc.dart';
 import '../bloc/puzzle_bloc.dart';
-import '../bloc/theme_bloc.dart';
 import '../provider/provider.dart';
-import '../puzzle_theme.dart';
+import '../theme/theme.dart';
 import '../widgets/widgets.dart';
 
 part 'header.dart';
 part 'menu.dart';
 part 'sections.dart';
 part 'board.dart';
-part 'tile.dart';
 
 /// {@template puzzle_page}
 /// The root page of the puzzle UI.
@@ -36,26 +32,10 @@ class PuzzlePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => PuzzleThemeBloc(
-            inititalTheme: const DashatarGreen(),
-            themes: const [
-              DashatarBlue(),
-              DashatarGreen(),
-              DashatarYellow(),
-            ],
-          ),
-        ),
-        BlocProvider(
-          create: (_) => MyPuzzleBloc(
-            secondsToBegin: 3,
-            ticker: const Ticker(),
-          ),
-        ),
-        BlocProvider(
           create: (context) => ThemeBloc(
-            initialTheme: const DashatarGreen(),
+            initialTheme: Halloween(),
             themes: [
-              context.read<PuzzleThemeBloc>().state.theme,
+              Halloween(),
             ],
           ),
         ),
@@ -67,8 +47,20 @@ class PuzzlePage extends StatelessWidget {
         BlocProvider(
           create: (_) => AudioControlBloc(),
         ),
+        BlocProvider(
+          create: (_) => CountdownBloc(
+            secondsToBegin: 3,
+            ticker: const Ticker(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => BombBloc(),
+        ),
+        BlocProvider(
+          create: (_) => RivebackgroundBloc(),
+        ),
       ],
-      child: const PuzzleView(),
+      child: const _PuzzleView(),
     );
   }
 }
@@ -76,9 +68,9 @@ class PuzzlePage extends StatelessWidget {
 /// {@template puzzle_view}
 /// Displays the content for the [PuzzlePage].
 /// {@endtemplate}
-class PuzzleView extends StatelessWidget {
+class _PuzzleView extends StatelessWidget {
   /// {@macro puzzle_view}
-  const PuzzleView({Key? key}) : super(key: key);
+  const _PuzzleView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,11 +83,16 @@ class PuzzleView extends StatelessWidget {
       body: AnimatedContainer(
         duration: PuzzleAnimation.backgroundColorChange,
         decoration: BoxDecoration(color: theme.backgroundColor),
-        child: BlocListener<PuzzleThemeBloc, PuzzleThemeState>(
-          listener: (context, state) {
-            final dashatarTheme = context.read<PuzzleThemeBloc>().state.theme;
-            context.read<ThemeBloc>().add(ThemeUpdated(theme: dashatarTheme));
-          },
+        child: MultiBlocListener(
+          listeners: const [
+            // TODO: Add other theme listerners here
+            // BlocListener<ThemeBloc, ThemeState>(
+            //   listener: (context, state) {
+            //     // final theme = context.read<MyThemeBlocOne>().state.theme;
+            //     // context.read<ThemeBloc>().add(ThemeUpdated(theme: theme));
+            //   },
+            // ),
+          ],
           child: MultiBlocProvider(
             providers: [
               BlocProvider(
@@ -104,7 +101,7 @@ class PuzzleView extends StatelessWidget {
                 ),
               ),
               BlocProvider(
-                create: (context) => PuzzleBloc(4)
+                create: (context) => PuzzleBloc(theme.gridSize)
                   ..add(
                     const PuzzleInitialized(
                       shufflePuzzle: shufflePuzzle,
@@ -113,11 +110,12 @@ class PuzzleView extends StatelessWidget {
               ),
             ],
             child: const _Puzzle(
-              key: Key('puzzle_view_puzzle'),
+              key: Key('puzzle_view'),
             ),
           ),
         ),
       ),
+      endDrawer: const Drawer(),
     );
   }
 }
@@ -134,6 +132,7 @@ class _Puzzle extends StatelessWidget {
       builder: (context, constraints) {
         return Stack(
           children: [
+            theme.layoutDelegate.backgroundBuilder(state),
             SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
@@ -142,12 +141,11 @@ class _Puzzle extends StatelessWidget {
                 child: Column(
                   children: const [
                     PuzzleHeader(),
-                    PuzzleSections(),
+                    _PuzzleSections(),
                   ],
                 ),
               ),
             ),
-            theme.layoutDelegate.backgroundBuilder(state),
           ],
         );
       },

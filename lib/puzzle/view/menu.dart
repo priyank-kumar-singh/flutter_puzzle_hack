@@ -1,11 +1,6 @@
 part of 'puzzle.dart';
 
-/// {@template puzzle_menu}
-/// Displays the menu of the puzzle.
-/// {@endtemplate}
-@visibleForTesting
 class PuzzleMenu extends StatelessWidget {
-  /// {@macro puzzle_menu}
   const PuzzleMenu({Key? key}) : super(key: key);
 
   @override
@@ -16,8 +11,8 @@ class PuzzleMenu extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ...List.generate(
-          themes.length,
-          (index) => PuzzleMenuItem(
+          themes.length > 1 ? themes.length : 0,
+          (index) => _PuzzleMenuItem(
             theme: themes[index],
             themeIndex: index,
           ),
@@ -31,8 +26,12 @@ class PuzzleMenu extends StatelessWidget {
               children: [
                 const Gap(44),
                 AudioControl(
-                  key: audioControlKey,
-                )
+                  key: Keys.audioControlKey,
+                ),
+                const Gap(22),
+                SettingsMenuButton(
+                  key: Keys.settingsBtnKey,
+                ),
               ],
             );
           },
@@ -42,13 +41,8 @@ class PuzzleMenu extends StatelessWidget {
   }
 }
 
-/// {@template puzzle_menu_item}
-/// Displays the menu item of the [PuzzleMenu].
-/// {@endtemplate}
-@visibleForTesting
-class PuzzleMenuItem extends StatelessWidget {
-  /// {@macro puzzle_menu_item}
-  const PuzzleMenuItem({
+class _PuzzleMenuItem extends StatelessWidget {
+  const _PuzzleMenuItem({
     Key? key,
     required this.theme,
     required this.themeIndex,
