@@ -49,17 +49,22 @@ class _PuzzleActionButtonState
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    final status = context.select((RiveAnchorBloc bloc) => bloc.state.status);
 
-    final status =
-        context.select((CountdownBloc bloc) => bloc.state.status);
-    final isLoading = status == MyPuzzleStatus.loading;
-    final isStarted = status == MyPuzzleStatus.started;
+    final isLoading = status == RiveAnchorStatus.flying;
+    final isStarted = status == RiveAnchorStatus.flyingIdle;
+    final isEnding = status == RiveAnchorStatus.backToLaszlow;
+    final isExit = status == RiveAnchorStatus.exit;
 
     final text = isStarted
-        ? context.l10n.dashatarRestart
-        : (isLoading
-            ? context.l10n.dashatarGetReady
-            : context.l10n.dashatarStartGame);
+        ? context.l10n.restart
+        : isEnding
+          ? context.l10n.waiting
+          : isExit
+            ? context.l10n.bye
+            : (isLoading
+              ? context.l10n.getReady
+              : context.l10n.startGame);
 
     return AudioControlListener(
       audioPlayer: _audioPlayer,
@@ -67,25 +72,18 @@ class _PuzzleActionButtonState
         duration: const Duration(milliseconds: 300),
         child: Tooltip(
           key: ValueKey(status),
-          message: isStarted ? context.l10n.puzzleRestartTooltip : '',
+          message: isStarted ? context.l10n.restartTooltip : '',
           verticalOffset: 40,
           child: PuzzleButton(
-            onPressed: isLoading
+            onPressed: isLoading || isEnding
                 ? null
                 : () async {
-                    final hasStarted = status == MyPuzzleStatus.started;
-
-                    // Reset the timer and the countdown.
+                    // Reset timer
                     context.read<TimerBloc>().add(const TimerReset());
-                    // context.read<CountdownBloc>().add(const CountdownReset());
+                    context.read<CountdownBloc>().add(const CountdownStopped());
                     context.read<RiveAnchorBloc>().add(const RiveAnchorPlay());
-
-                    // Initialize the puzzle board to show the initial puzzle
-                    // (unshuffled) before the countdown completes.
-                    if (hasStarted) {
-                      context.read<PuzzleBloc>().add(
-                            const PuzzleInitialized(shufflePuzzle: false),
-                          );
+                    if (isStarted) {
+                      context.read<PuzzleBloc>().add(const PuzzleInitialized(shufflePuzzle: false));
                     }
 
                     unawaited(_audioPlayer.replay());

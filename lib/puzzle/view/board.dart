@@ -1,7 +1,6 @@
 part of 'puzzle.dart';
 
 class _PuzzleBoard extends StatelessWidget {
-  /// {@macro puzzle_board}
   const _PuzzleBoard({Key? key}) : super(key: key);
 
   @override

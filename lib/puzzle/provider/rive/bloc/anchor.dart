@@ -3,62 +3,68 @@ import 'package:equatable/equatable.dart';
 import 'package:rive/rive.dart';
 
 class RiveAnchorBloc extends Bloc<RiveAnchorEvent, RiveAnchorState> {
-  SMITrigger? _play, _stop, _reset;
-  List<String>? storyInitial, storyEnd;
-  int currentDialogue = -1;
+  SMITrigger? _play, _reset, _restart;
+  int? _storyInitial, _storyFinale;
 
-  RiveAnchorBloc() : super(const RiveAnchorIdle()) {
+  RiveAnchorBloc() : super(const RiveAnchorState()) {
     on<RiveAnchorPlay>(_onAnchorFly);
     on<RiveAnchorReset>(_onAnchorReset);
     on<RiveAnchorStoryForward>(_onStoryForward);
-    on<RiveAnchorStoryToEnd>(_onStoryToEnd);
   }
 
-  void registerSpeech(List<String> storyInitial, storyEnd) {
-    this.storyInitial = storyInitial;
-    this.storyEnd = storyEnd;
+  void registerStoryCount(int initial, int end) {
+    _storyInitial = initial;
+    _storyFinale = end;
   }
 
   void registerTriggers(Artboard artboard) {
-    final controller = StateMachineController.fromArtboard(
-      artboard,
-      'state_machine',
-    );
+    final controller = StateMachineController.fromArtboard(artboard, 'state_machine');
     artboard.addController(controller!);
     _play = controller.findInput<bool>('bat') as SMITrigger;
-    _stop = controller.findInput<bool>('stop') as SMITrigger;
+    _restart = controller.findInput<bool>('restart') as SMITrigger;
     _reset = controller.findInput<bool>('reset') as SMITrigger;
-  }
-
-  void _onAnchorFly(RiveAnchorPlay event, Emitter<RiveAnchorState> emit) {
     _play?.fire();
-    emit(const RiveanchorFlying());
   }
 
-  void _onAnchorReset(RiveAnchorReset event, Emitter<RiveAnchorState> emit) {
-    currentDialogue = -1;
+  void _onAnchorFly(RiveAnchorPlay event, Emitter<RiveAnchorState> emit) async {
+    if (state.status == RiveAnchorStatus.flying || state.status == RiveAnchorStatus.flyingIdle) {
+      emit(const RiveAnchorState());
+      _restart?.fire();
+      await Future.delayed(const Duration(milliseconds: 3000));
+      emit(const RiveAnchorState(diagIndex: 0, status: RiveAnchorStatus.flying));
+    } else {
+      _play?.fire();
+      await Future.delayed(const Duration(milliseconds: 2000));
+      emit(const RiveAnchorState(diagIndex: 0, status: RiveAnchorStatus.flying));
+    }
+
+  }
+
+  void _onAnchorReset(RiveAnchorReset event, Emitter<RiveAnchorState> emit) async {
     _reset?.fire();
-    emit(const RiveAnchorIdle());
+    await Future.delayed(const Duration(milliseconds: 2000));
+    emit(const RiveAnchorState());
   }
 
-  void _onStoryForward(RiveAnchorStoryForward event, Emitter<RiveAnchorState> emit) {
-    if (++currentDialogue == storyInitial?.length) {
-      currentDialogue = -1;
-      emit(const RiveAnchorStoryPause());
-    } else {
-      emit(RiveAnchorStoryStart(currentDialogue));
-    }
-  }
-
-  void _onStoryToEnd(RiveAnchorStoryToEnd event, Emitter<RiveAnchorState> emit) {
-    if (currentDialogue == -1) {
+  void _onStoryForward(RiveAnchorStoryForward event, Emitter<RiveAnchorState> emit) async {
+    if (state.status == RiveAnchorStatus.flying) {
+      if (state.diagIndex + 1 == _storyInitial) {
+        emit(state.newState(RiveAnchorStatus.flyingIdle));
+      } else {
+        emit(state.from(index: state.diagIndex + 1));
+      }
+    } else if (state.status == RiveAnchorStatus.flyingIdle) {
       _reset?.fire();
-    }
-    if (++currentDialogue == storyInitial?.length) {
-      currentDialogue = 0;
-      emit(const RiveAnchorExit());
-    } else {
-      emit(RiveAnchorStoryEnd(currentDialogue));
+      await Future.delayed(const Duration(milliseconds: 2000));
+      emit(state.from(index: 0, status: RiveAnchorStatus.backToLaszlow));
+    } else if (state.status == RiveAnchorStatus.backToLaszlow) {
+      if (state.diagIndex + 1 == _storyFinale) {
+        _play?.fire();
+        await Future.delayed(const Duration(milliseconds: 2000));
+        emit(state.newState(RiveAnchorStatus.exit));
+      } else {
+        emit(state.from(index: state.diagIndex + 1));
+      }
     }
   }
 }
@@ -75,48 +81,35 @@ class RiveAnchorPlay extends RiveAnchorEvent {
   const RiveAnchorPlay();
 }
 
-class RiveAnchorStoryForward extends RiveAnchorEvent {
-  const RiveAnchorStoryForward();
-}
-
-class RiveAnchorStoryToEnd extends RiveAnchorEvent {
-  const RiveAnchorStoryToEnd();
-}
-
 class RiveAnchorReset extends RiveAnchorEvent {
   const RiveAnchorReset();
 }
 
-// Rive Anchor States
-abstract class RiveAnchorState extends Equatable {
-  const RiveAnchorState([this.currentDialogue = 0]);
+class RiveAnchorStoryForward extends RiveAnchorEvent {
+  const RiveAnchorStoryForward();
+}
 
-  final int currentDialogue;
+
+// Rive Anchor States
+enum RiveAnchorStatus {idle, flying, flyingIdle, backToLaszlow, exit}
+
+class RiveAnchorState extends Equatable {
+  const RiveAnchorState({this.diagIndex = -1, this.status = RiveAnchorStatus.idle});
+
+  final int diagIndex;
+  final RiveAnchorStatus status;
 
   @override
-  List<Object> get props => [currentDialogue];
-}
+  List<Object> get props => [diagIndex, status];
 
-class RiveAnchorIdle extends RiveAnchorState {
-  const RiveAnchorIdle();
-}
+  RiveAnchorState from({int? index, RiveAnchorStatus? status}) {
+    return RiveAnchorState(
+      diagIndex: index ?? diagIndex,
+      status: status ?? this.status,
+    );
+  }
 
-class RiveanchorFlying extends RiveAnchorState {
-  const RiveanchorFlying() : super(-1);
-}
-
-class RiveAnchorStoryStart extends RiveAnchorState {
-  const RiveAnchorStoryStart(int index) : super(index);
-}
-
-class RiveAnchorStoryPause extends RiveAnchorState {
-  const RiveAnchorStoryPause() : super(-1);
-}
-
-class RiveAnchorStoryEnd extends RiveAnchorState {
-  const RiveAnchorStoryEnd(int index) : super(index);
-}
-
-class RiveAnchorExit extends RiveAnchorState {
-  const RiveAnchorExit() : super(-1);
+  RiveAnchorState newState(RiveAnchorStatus status) {
+    return RiveAnchorState(status: status);
+  }
 }

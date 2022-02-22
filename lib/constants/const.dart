@@ -32,11 +32,6 @@ abstract class TileFontSize {
   static double large = 54;
 }
 
-abstract class Texts {
-  static const title = 'Flutter Puzzle Hack';
-}
-
-
 const kHeaderButtonSize_small = 24.0;
 const kHeaderButtonSize = 33.0;
 

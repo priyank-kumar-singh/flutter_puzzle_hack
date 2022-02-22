@@ -91,7 +91,7 @@ class TimerView extends StatelessWidget {
   }
 
   String _getDurationLabel(Duration duration, BuildContext context) {
-    return context.l10n.puzzleDurationLabelText(
+    return context.l10n.durationLabelText(
       duration.inHours.toString(),
       duration.inMinutes.remainder(60).toString(),
       duration.inSeconds.remainder(60).toString(),

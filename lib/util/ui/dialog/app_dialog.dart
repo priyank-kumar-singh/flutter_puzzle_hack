@@ -8,6 +8,7 @@ Future<T?> showAppDialog<T>({
   required Widget child,
   bool barrierDismissible = true,
   String barrierLabel = '',
+  bool useDefaultConstraints = true,
 }) =>
     showGeneralDialog<T>(
       transitionBuilder: (context, animation, secondaryAnimation, widget) {
@@ -30,6 +31,7 @@ Future<T?> showAppDialog<T>({
       barrierColor: const Color(0x66000000),
       context: context,
       pageBuilder: (context, animation, secondaryAnimation) => AppDialog(
+        useDefaultConstraints: useDefaultConstraints,
         child: child,
       ),
     );
@@ -42,11 +44,13 @@ class AppDialog extends StatelessWidget {
   /// {@macro app_dialog}
   const AppDialog({
     Key? key,
+    required this.useDefaultConstraints,
     required this.child,
   }) : super(key: key);
 
   /// The content of this dialog.
   final Widget child;
+  final bool useDefaultConstraints;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +65,7 @@ class AppDialog extends StatelessWidget {
       medium: (_, child) => child!,
       large: (_, child) => child!,
       child: (currentSize) {
-        final dialogWidth =
+        final dialogWidth = !useDefaultConstraints ? null :
             currentSize == ResponsiveLayoutSize.large ? 740.0 : 700.0;
 
         return Dialog(

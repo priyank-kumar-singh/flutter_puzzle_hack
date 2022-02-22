@@ -54,7 +54,7 @@ class AppTitle extends StatelessWidget {
           style: textStyle,
           duration: PuzzleAnimation.textStyle,
           child: Text(
-            title ?? Texts.title,
+            title ?? context.l10n.headerTitle,
           ),
         );
       },

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_puzzle_hack/constants/const.dart';
+import 'package:flutter_puzzle_hack/puzzle/provider/provider.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
 import '../../bloc/puzzle_bloc.dart';
@@ -38,6 +39,7 @@ class _MyPuzzleBoardState extends State<MyPuzzleBoard> {
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) async {
         if (state.puzzleStatus == PuzzleStatus.complete) {
+          context.read<RiveAnchorBloc>().add(const RiveAnchorStoryForward());
           _completePuzzleTimer =
               Timer(const Duration(milliseconds: 370), () async {
             // await showAppDialog<void>(

@@ -49,7 +49,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
             : ThemeConstants.body;
 
         return Semantics(
-          label: l10n.puzzleNumberOfMovesAndTilesLeftLabelText(
+          label: l10n.numberOfMovesAndTilesLeftLabelText(
             numberOfMoves.toString(),
             numberOfTilesLeft.toString(),
           ),
@@ -73,7 +73,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
                     color: textColor,
                   ),
                   duration: PuzzleAnimation.textStyle,
-                  child: Text(' ${l10n.puzzleNumberOfMoves} | '),
+                  child: Text(' ${l10n.numberOfMoves} | '),
                 ),
                 AnimatedDefaultTextStyle(
                   key: const Key('number_of_moves_and_tiles_left_tiles_left'),
@@ -88,7 +88,7 @@ class NumberOfMovesAndTilesLeft extends StatelessWidget {
                     color: textColor,
                   ),
                   duration: PuzzleAnimation.textStyle,
-                  child: Text(' ${l10n.puzzleNumberOfTilesLeft}'),
+                  child: Text(' ${l10n.numberOfTilesLeft}'),
                 ),
               ],
             ),

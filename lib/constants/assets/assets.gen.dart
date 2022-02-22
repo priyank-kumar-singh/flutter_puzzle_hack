@@ -17,9 +17,6 @@ class $AssetsAudioGen {
   /// File path: assets/audio/dumbbell.mp3
   String get dumbbell => 'assets/audio/dumbbell.mp3';
 
-  /// File path: assets/audio/explosion.mp3
-  String get explosion => 'assets/audio/explosion.mp3';
-
   /// File path: assets/audio/sandwich.mp3
   String get sandwich => 'assets/audio/sandwich.mp3';
 
@@ -28,9 +25,6 @@ class $AssetsAudioGen {
 
   /// File path: assets/audio/skateboard.mp3
   String get skateboard => 'assets/audio/skateboard.mp3';
-
-  /// File path: assets/audio/sparkel.mp3
-  String get sparkel => 'assets/audio/sparkel.mp3';
 
   /// File path: assets/audio/success.mp3
   String get success => 'assets/audio/success.mp3';
@@ -81,7 +75,6 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
-  $AssetsImagesDashGen get dash => const $AssetsImagesDashGen();
   $AssetsImagesHalloweenGen get halloween => const $AssetsImagesHalloweenGen();
 }
 
@@ -91,83 +84,17 @@ class $AssetsRiveGen {
   /// File path: assets/rive/bat.riv
   RiveGenImage get bat => const RiveGenImage('assets/rive/bat.riv');
 
-  /// File path: assets/rive/bomb.riv
-  RiveGenImage get bomb => const RiveGenImage('assets/rive/bomb.riv');
-
-  /// File path: assets/rive/dash_bird.riv
-  RiveGenImage get dashBird => const RiveGenImage('assets/rive/dash_bird.riv');
-
-  /// File path: assets/rive/dory.riv
-  RiveGenImage get dory => const RiveGenImage('assets/rive/dory.riv');
-
   /// File path: assets/rive/halloween_moon.riv
   RiveGenImage get halloweenMoon =>
       const RiveGenImage('assets/rive/halloween_moon.riv');
-
-  /// File path: assets/rive/viking.riv
-  RiveGenImage get viking => const RiveGenImage('assets/rive/viking.riv');
-
-  /// File path: assets/rive/zombie.riv
-  RiveGenImage get zombie => const RiveGenImage('assets/rive/zombie.riv');
-}
-
-class $AssetsImagesDashGen {
-  const $AssetsImagesDashGen();
-
-  /// File path: assets/images/dash/dash.png
-  AssetGenImage get dash => const AssetGenImage('assets/images/dash/dash.png');
-
-  /// File path: assets/images/dash/dash_globe.png
-  AssetGenImage get dashGlobe =>
-      const AssetGenImage('assets/images/dash/dash_globe.png');
-
-  /// File path: assets/images/dash/dash_large.png
-  AssetGenImage get dashLarge =>
-      const AssetGenImage('assets/images/dash/dash_large.png');
-
-  /// File path: assets/images/dash/dash_medium.png
-  AssetGenImage get dashMedium =>
-      const AssetGenImage('assets/images/dash/dash_medium.png');
-
-  /// File path: assets/images/dash/dash_rocket.png
-  AssetGenImage get dashRocket =>
-      const AssetGenImage('assets/images/dash/dash_rocket.png');
-
-  /// File path: assets/images/dash/dash_small.png
-  AssetGenImage get dashSmall =>
-      const AssetGenImage('assets/images/dash/dash_small.png');
-
-  /// File path: assets/images/dash/dash_tut.png
-  AssetGenImage get dashTut =>
-      const AssetGenImage('assets/images/dash/dash_tut.png');
-
-  /// File path: assets/images/dash/dashatars.png
-  AssetGenImage get dashatars =>
-      const AssetGenImage('assets/images/dash/dashatars.png');
 }
 
 class $AssetsImagesHalloweenGen {
   const $AssetsImagesHalloweenGen();
 
-  /// File path: assets/images/halloween/background1.png
-  AssetGenImage get background1 =>
-      const AssetGenImage('assets/images/halloween/background1.png');
-
-  /// File path: assets/images/halloween/background2.jpg
-  AssetGenImage get background2 =>
-      const AssetGenImage('assets/images/halloween/background2.jpg');
-
   /// File path: assets/images/halloween/ghost.png
   AssetGenImage get ghost =>
       const AssetGenImage('assets/images/halloween/ghost.png');
-
-  /// File path: assets/images/halloween/halloween.jpg
-  AssetGenImage get halloween =>
-      const AssetGenImage('assets/images/halloween/halloween.jpg');
-
-  /// File path: assets/images/halloween/vampire.png
-  AssetGenImage get vampire =>
-      const AssetGenImage('assets/images/halloween/vampire.png');
 }
 
 class Assets {

@@ -54,19 +54,19 @@ class MyPuzzleLayout extends PuzzleLayoutDelegate {
 
   @override
   Widget backgroundBuilder(PuzzleState state) {
-    return Stack(
-      children: [
-        const RiveBackground(),
-        Positioned(
-          bottom: 74,
-          right: 50,
-          child: ResponsiveLayoutBuilder(
-            small: (_, child) => const SizedBox(),
-            medium: (_, child) => const SizedBox(),
-            large: (_, child) => const RiveAnchor(),
-          ),
-        ),
-      ],
+    return const RiveBackground();
+  }
+
+  @override
+  Widget anchorBuilder(PuzzleState state) {
+    return Positioned(
+      bottom: 120,
+      right: 120,
+      child: ResponsiveLayoutBuilder(
+        small: (_, child) => const SizedBox(),
+        medium: (_, child) => const SizedBox(),
+        large: (_, child) => const RiveAnchor(),
+      ),
     );
   }
 

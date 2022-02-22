@@ -39,7 +39,7 @@ flutter_gen:
     flutter_svg: true
     rive: true
 
-# Run below to generate assets
+# Run below command to generate assets
 # flutter packages pub run build_runner build
 
 flutter:
@@ -48,7 +48,6 @@ flutter:
   assets:
     - assets/audio/
     - assets/icons/
-    - assets/images/dash/
     - assets/images/halloween/
     - assets/rive/
 

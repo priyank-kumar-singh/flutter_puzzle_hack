@@ -8,10 +8,20 @@ class Halloween extends ThemeX {
   Halloween() : super() {
     storyline.addAll([
       'Hello I\'m Laszlo.',
-      'The witch attacked me and made me a bat.\nWill you help, please?',
+      'The witch attacked me and made me a bat.\nWill you help me, please?',
       'Thanks! Now listen Carefully...',
       'In order to revert witch\'s magic we need to first call our friendly ghost - Gia.',
-      'I just found out she\'s been captured and locked. You need arrange all the pieces of the puzzle to free her.',
+      'I just found our friend has been captured and locked.',
+      'You need to arrange all the pieces of the puzzle to free her.',
+      'Click Next, when ready...',
+    ]);
+    endStory.addAll([
+      'Yippee! You freed the ghost. You\'re amazing.',
+      'I am going to help others. You take care here...',
+    ]);
+    tips.addAll([
+      'Need help! Check the ghost picture here',
+      'Do you know there\'s a trick to solve this puzzle?',
     ]);
   }
 
@@ -19,7 +29,7 @@ class Halloween extends ThemeX {
   String get name => 'Halloween';
 
   @override
-  String semanticsLabel(BuildContext context) => context.l10n.dashatarGreenDashLabelText;
+  String semanticsLabel(BuildContext context) => context.l10n.halloweenSemanticsLabel;
 
   @override
   Color get backgroundColor => const Color(0xFF65819E);

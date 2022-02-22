@@ -72,6 +72,7 @@ class _MyAppState extends State<MyApp> {
 
     if (_platformHelper.isWeb) {
       final assets = [
+        Assets.images.halloween.ghost,
         Assets.icons.volumeOn,
         Assets.icons.volumeOff,
       ];
@@ -79,16 +80,14 @@ class _MyAppState extends State<MyApp> {
       final assetsMemory = [
         Assets.audio.click,
         Assets.audio.dumbbell,
-        Assets.audio.explosion,
         Assets.audio.sandwich,
         Assets.audio.shuffle,
         Assets.audio.skateboard,
-        Assets.audio.sparkel,
         Assets.audio.success,
         Assets.audio.tileMove,
 
-        Assets.rive.bomb.path,
-        Assets.rive.dashBird.path,
+        Assets.rive.bat.path,
+        Assets.rive.halloweenMoon.path,
       ];
 
       _timer = Timer(const Duration(milliseconds: 20), () {
@@ -128,7 +127,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      onGenerateTitle: (context) => context.l10n.puzzleChallengeTitle,
+      onGenerateTitle: (context) => context.l10n.title,
       home: const PuzzlePage(),
     );
   }

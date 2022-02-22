@@ -264,7 +264,7 @@ class _PuzzleCountdownGoState extends State<PuzzleCountdownGo>
             child: ScaleTransition(
               scale: inScale,
               child: Text(
-                context.l10n.dashatarCountdownGo,
+                context.l10n.countdownGo,
                 style: ThemeConstants.countdownTime.copyWith(
                   fontSize: 100,
                   color: theme.defaultColor,

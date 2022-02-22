@@ -92,149 +92,113 @@ abstract class AppLocalizations {
     Locale('en')
   ];
 
+  /// Shown as the title of the puzzle
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle Hack'**
+  String get title;
+
+  /// Shown as the title in app
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter Puzzle Hack'**
+  String get headerTitle;
+
   /// Shown as a tooltip for puzzle menu buttons
   ///
   /// In en, this message translates to:
   /// **'Changing the theme will reset your score'**
-  String get puzzleChangeTooltip;
+  String get themeChangeTooltip;
 
   /// Shown as a tooltip for the puzzle restart button
   ///
   /// In en, this message translates to:
   /// **'Restarting the puzzle will reset your score'**
-  String get puzzleRestartTooltip;
-
-  /// Shown as the title of the puzzle
-  ///
-  /// In en, this message translates to:
-  /// **'Puzzle Challenge'**
-  String get puzzleChallengeTitle;
+  String get restartTooltip;
 
   /// Indicates how many moves have been made on the current puzzle
   ///
   /// In en, this message translates to:
   /// **'Moves'**
-  String get puzzleNumberOfMoves;
+  String get numberOfMoves;
 
   /// Indicates how many puzzle tiles are not in their correct position
   ///
   /// In en, this message translates to:
   /// **'Tiles'**
-  String get puzzleNumberOfTilesLeft;
-
-  /// Shown on the button that shuffle the puzzle
-  ///
-  /// In en, this message translates to:
-  /// **'Shuffle'**
-  String get puzzleShuffle;
-
-  /// Shown as the success state when the puzzle is completed
-  ///
-  /// In en, this message translates to:
-  /// **'Well done. Congrats!'**
-  String get puzzleCompleted;
+  String get numberOfTilesLeft;
 
   /// Shown before the puzzle is started
   ///
   /// In en, this message translates to:
   /// **'Start Game'**
-  String get dashatarStartGame;
-
-  /// No description provided for @dashatarGetReady.
-  ///
-  /// In en, this message translates to:
-  /// **'Get ready...'**
-  String get dashatarGetReady;
+  String get startGame;
 
   /// Shown after the puzzle is started and may be restarted
   ///
   /// In en, this message translates to:
   /// **'Restart'**
-  String get dashatarRestart;
+  String get restart;
+
+  /// Shown when the puzzle is loading
+  ///
+  /// In en, this message translates to:
+  /// **'Get ready...'**
+  String get getReady;
+
+  /// Shown when the puzzle is waiting to exit
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting...'**
+  String get waiting;
+
+  /// Shown when the puzzle is finally in exit completed
+  ///
+  /// In en, this message translates to:
+  /// **'Bye...'**
+  String get bye;
+
+  /// Shown as a button for next tip
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get next;
+
+  /// Shown as a button for viewing attached tip
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get view;
 
   /// Shown when the countdown has just finished and the puzzle is about to start
   ///
   /// In en, this message translates to:
   /// **'GO!'**
-  String get dashatarCountdownGo;
-
-  /// Shown as a title in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Puzzle challenge completed'**
-  String get dashatarSuccessCompleted;
-
-  /// Shown as a subtitle in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Well done.\nCongrats!'**
-  String get dashatarSuccessWellDone;
-
-  /// Shown as a score title in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Score'**
-  String get dashatarSuccessScore;
-
-  /// Shown as a number of moves in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'{numberOfMoves} Moves'**
-  String dashatarSuccessNumberOfMoves(String numberOfMoves);
+  String get countdownGo;
 
   /// Semantic label for the puzzle tile
   ///
   /// In en, this message translates to:
   /// **'Value: {value}, position: {x}, {y}'**
-  String puzzleTileLabelText(String value, String x, String y);
+  String tileLabelText(String value, String x, String y);
 
   /// Semantic label for the puzzle tile
   ///
   /// In en, this message translates to:
   /// **'Moves: {numberOfMoves}, tiles: {tilesLeft}'**
-  String puzzleNumberOfMovesAndTilesLeftLabelText(String numberOfMoves, String tilesLeft);
+  String numberOfMovesAndTilesLeftLabelText(String numberOfMoves, String tilesLeft);
 
   /// Semantic label for the Dashatar timer
   ///
   /// In en, this message translates to:
   /// **'{hours} hours {minutes} minutes {seconds} seconds'**
-  String puzzleDurationLabelText(String hours, String minutes, String seconds);
+  String durationLabelText(String hours, String minutes, String seconds);
 
-  /// Semantic label for the blue Dash
+  /// No description provided for @halloweenSemanticsLabel.
   ///
   /// In en, this message translates to:
-  /// **'Dumbbell Dash'**
-  String get dashatarBlueDashLabelText;
-
-  /// Semantic label for the green Dash
-  ///
-  /// In en, this message translates to:
-  /// **'Skateboard Dash'**
-  String get dashatarGreenDashLabelText;
-
-  /// Semantic label for the yellow Dash
-  ///
-  /// In en, this message translates to:
-  /// **'Sandwich Dash'**
-  String get dashatarYellowDashLabelText;
-
-  /// Shown as a share title in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Share your score!'**
-  String get dashatarSuccessShareYourScoreTitle;
-
-  /// Shown as a share message in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Share this puzzle to challenge your friends and be sure to check out the Flutter Puzzle Hack.'**
-  String get dashatarSuccessShareYourScoreMessage;
-
-  /// The text to share for this Flutter Puzzle challenge, shown in the Dashatar success state
-  ///
-  /// In en, this message translates to:
-  /// **'Just solved the #FlutterPuzzleHack! Check it out ↓'**
-  String get dashatarSuccessShareText;
+  /// **'Gia the Ghost'**
+  String get halloweenSemanticsLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

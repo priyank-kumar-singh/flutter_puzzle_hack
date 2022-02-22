@@ -1,73 +1,63 @@
 {
     "@@locale": "en",
-    "puzzleChangeTooltip": "Changing the theme will reset your score",
-    "@puzzleChangeTooltip": {
-        "description": "Shown as a tooltip for puzzle menu buttons"
-    },
-    "puzzleRestartTooltip": "Restarting the puzzle will reset your score",
-    "@puzzleRestartTooltip": {
-        "description": "Shown as a tooltip for the puzzle restart button"
-    },
-    "puzzleChallengeTitle": "Puzzle Challenge",
-    "@puzzleChallengeTitle": {
+    "title": "Puzzle Hack",
+    "@title": {
         "description": "Shown as the title of the puzzle"
     },
-    "puzzleNumberOfMoves": "Moves",
-    "@puzzleNumberOfMoves": {
+    "headerTitle": "Flutter Puzzle Hack",
+    "@headerTitle": {
+        "description": "Shown as the title in app"
+    },
+    "themeChangeTooltip": "Changing the theme will reset your score",
+    "@themeChangeTooltip": {
+        "description": "Shown as a tooltip for puzzle menu buttons"
+    },
+    "restartTooltip": "Restarting the puzzle will reset your score",
+    "@restartTooltip": {
+        "description": "Shown as a tooltip for the puzzle restart button"
+    },
+    "numberOfMoves": "Moves",
+    "@numberOfMoves": {
         "description": "Indicates how many moves have been made on the current puzzle"
     },
-    "puzzleNumberOfTilesLeft": "Tiles",
-    "@puzzleNumberOfTilesLeft": {
+    "numberOfTilesLeft": "Tiles",
+    "@numberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
     },
-    "puzzleShuffle": "Shuffle",
-    "@puzzleShuffle": {
-        "description": "Shown on the button that shuffle the puzzle"
-    },
-    "puzzleCompleted": "Well done. Congrats!",
-    "@puzzleCompleted": {
-        "description": "Shown as the success state when the puzzle is completed"
-    },
-    "dashatarStartGame": "Start Game",
-    "@dashatarStartGame": {
+    "startGame": "Start Game",
+    "@startGame": {
         "description": "Shown before the puzzle is started"
     },
-    "dashatarGetReady": "Get ready...",
-    "@dashatarStartPuzzle": {
-        "description": "Shown when the puzzle is loading"
-    },
-    "dashatarRestart": "Restart",
-    "@dashatarRestart": {
+    "restart": "Restart",
+    "@restart": {
         "description": "Shown after the puzzle is started and may be restarted"
     },
-    "dashatarCountdownGo": "GO!",
-    "@dashatarCountdownGo": {
+    "getReady": "Get ready...",
+    "@getReady": {
+        "description": "Shown when the puzzle is loading"
+    },
+    "waiting": "Waiting...",
+    "@waiting": {
+        "description": "Shown when the puzzle is waiting to exit"
+    },
+    "bye": "Bye...",
+    "@bye": {
+        "description": "Shown when the puzzle is finally in exit completed"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Shown as a button for next tip"
+    },
+    "view": "View",
+    "@view": {
+        "description": "Shown as a button for viewing attached tip"
+    },
+    "countdownGo": "GO!",
+    "@countdownGo": {
         "description": "Shown when the countdown has just finished and the puzzle is about to start"
     },
-    "dashatarSuccessCompleted": "Puzzle challenge completed",
-    "@dashatarSuccessCompleted": {
-        "description": "Shown as a title in the Dashatar success state"
-    },
-    "dashatarSuccessWellDone": "Well done.\nCongrats!",
-    "@dashatarSuccessWellDone": {
-        "description": "Shown as a subtitle in the Dashatar success state"
-    },
-    "dashatarSuccessScore": "Score",
-    "@dashatarSuccessScore": {
-        "description": "Shown as a score title in the Dashatar success state"
-    },
-    "dashatarSuccessNumberOfMoves": "{numberOfMoves} Moves",
-    "@dashatarSuccessNumberOfMoves": {
-        "description": "Shown as a number of moves in the Dashatar success state",
-        "placeholders": {
-            "numberOfMoves": {
-                "type": "String",
-                "example": "5"
-            }
-        }
-    },
-    "puzzleTileLabelText": "Value: {value}, position: {x}, {y}",
-    "@puzzleTileLabelText": {
+    "tileLabelText": "Value: {value}, position: {x}, {y}",
+    "@tileLabelText": {
         "description": "Semantic label for the puzzle tile",
         "placeholders": {
             "value": {
@@ -84,8 +74,8 @@
             }
         }
     },
-    "puzzleNumberOfMovesAndTilesLeftLabelText": "Moves: {numberOfMoves}, tiles: {tilesLeft}",
-    "@puzzleNumberOfMovesAndTilesLeftLabelText": {
+    "numberOfMovesAndTilesLeftLabelText": "Moves: {numberOfMoves}, tiles: {tilesLeft}",
+    "@numberOfMovesAndTilesLeftLabelText": {
         "description": "Semantic label for the puzzle tile",
         "placeholders": {
             "numberOfMoves": {
@@ -98,8 +88,8 @@
             }
         }
     },
-    "dashatarPuzzleDurationLabelText": "{hours} hours {minutes} minutes {seconds} seconds",
-    "@dashatarPuzzleDurationLabelText": {
+    "durationLabelText": "{hours} hours {minutes} minutes {seconds} seconds",
+    "@durationLabelText": {
         "description": "Semantic label for the Dashatar timer",
         "placeholders": {
             "hours": {
@@ -116,28 +106,5 @@
             }
         }
     },
-    "dashatarBlueDashLabelText": "Dumbbell Dash",
-    "@dashatarBlueDashLabelText": {
-        "description": "Semantic label for the blue Dash"
-    },
-    "dashatarGreenDashLabelText": "Skateboard Dash",
-    "@dashatarGreenDashLabelText": {
-        "description": "Semantic label for the green Dash"
-    },
-    "dashatarYellowDashLabelText": "Sandwich Dash",
-    "@dashatarYellowDashLabelText": {
-        "description": "Semantic label for the yellow Dash"
-    },
-    "dashatarSuccessShareYourScoreTitle": "Share your score!",
-    "@dashatarSuccessShareYourScoreTitle": {
-        "description": "Shown as a share title in the Dashatar success state"
-    },
-    "dashatarSuccessShareYourScoreMessage": "Share this puzzle to challenge your friends and be sure to check out the Flutter Puzzle Hack.",
-    "@dashatarSuccessShareYourScoreMessage": {
-        "description": "Shown as a share message in the Dashatar success state"
-    },
-    "dashatarSuccessShareText": "Just solved the #FlutterPuzzleHack! Check it out ↓",
-    "@dashatarSuccessShareText": {
-        "description": "The text to share for this Flutter Puzzle challenge, shown in the Dashatar success state"
-    }
+    "halloweenSemanticsLabel": "Gia the Ghost"
 }

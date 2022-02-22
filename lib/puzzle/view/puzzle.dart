@@ -78,6 +78,7 @@ class _PuzzleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
+    context.read<RiveAnchorBloc>().registerStoryCount(theme.storyline.length, theme.endStory.length);
 
     return Scaffold(
       body: AnimatedContainer(
@@ -121,6 +122,7 @@ class _Puzzle extends StatelessWidget {
             theme.layoutDelegate.backgroundBuilder(state),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 2000),
+              reverseDuration: const Duration(milliseconds: 400),
               child: !background ? null : SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
@@ -135,6 +137,7 @@ class _Puzzle extends StatelessWidget {
                 ),
               ),
             ),
+            theme.layoutDelegate.anchorBuilder(state),
           ],
         );
       },

@@ -154,7 +154,7 @@ class PuzzleTileState extends State<PuzzleTile>
                   borderRadius: const BorderRadius.all(Radius.circular(kTileBorderRadius)),
                   child: Image.memory(
                     theme.assetForTile(widget.tile.value),
-                    semanticLabel: context.l10n.puzzleTileLabelText(
+                    semanticLabel: context.l10n.tileLabelText(
                       widget.tile.value.toString(),
                       widget.tile.currentPosition.x.toString(),
                       widget.tile.currentPosition.y.toString(),
