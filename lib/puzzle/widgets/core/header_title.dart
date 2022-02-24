@@ -9,9 +9,9 @@ import '../../theme/theme.dart';
 /// {@template puzzle_title}
 /// Displays the title of the puzzle in the given color.
 /// {@endtemplate}
-class AppTitle extends StatelessWidget {
+class HeaderTitle extends StatelessWidget {
   /// {@macro puzzle_title}
-  const AppTitle({
+  const HeaderTitle({
     Key? key,
     this.title,
     this.color,

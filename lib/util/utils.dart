@@ -1,6 +1,7 @@
 export 'helpers/audio_player.dart';
 export 'helpers/image_split.dart';
 export 'helpers/platform.dart';
+export 'helpers/timer.dart';
 export 'helpers/url_launch.dart';
 
 export 'layout/responsive_gap.dart';

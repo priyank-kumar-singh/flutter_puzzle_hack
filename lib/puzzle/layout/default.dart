@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_puzzle_hack/constants/const.dart';
 import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
+import 'package:gap/gap.dart';
 
 import '../bloc/puzzle_bloc.dart';
 import '../provider/provider.dart';
@@ -38,9 +40,19 @@ class MyPuzzleLayout extends PuzzleLayoutDelegate {
           medium: 32,
         ),
         ResponsiveLayoutBuilder(
-          small: (_, child) => const PuzzleActionButton(),
-          medium: (_, child) => const PuzzleActionButton(),
+          small: (_, child) => child!,
+          medium: (_, child) => child!,
           large: (_, __) => const SizedBox(),
+          child: (currentSize) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                PuzzleActionButton(),
+                Gap(12),
+                PuzzleShareButton(),
+              ],
+            );
+          },
         ),
         const ResponsiveGap(
           small: 32,
@@ -63,9 +75,10 @@ class MyPuzzleLayout extends PuzzleLayoutDelegate {
       bottom: 120,
       right: 120,
       child: ResponsiveLayoutBuilder(
-        small: (_, child) => const SizedBox(),
-        medium: (_, child) => const SizedBox(),
-        large: (_, child) => const RiveAnchor(),
+        small: (_, __) => const SizedBox(),
+        medium: (_, __) => const SizedBox(),
+        large: (_, child) => child!,
+        child: (_) => RiveAnchor(key: Keys.anchorKey),
       ),
     );
   }

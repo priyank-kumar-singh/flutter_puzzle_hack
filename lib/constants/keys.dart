@@ -10,4 +10,5 @@ abstract class Keys {
   static final numberOfMovesAndTilesLeftKey = GlobalKey(debugLabel: 'number_of_moves_and_tiles_left');
   static final audioControlKey = GlobalKey(debugLabel: 'audio_control');
   static final settingsBtnKey = GlobalKey(debugLabel: 'settings_btn');
+  static final anchorKey = GlobalKey(debugLabel: 'puzzle_anchor');
 }

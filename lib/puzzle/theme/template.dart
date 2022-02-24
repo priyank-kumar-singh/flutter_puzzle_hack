@@ -11,12 +11,21 @@ import '../layout/template.dart';
 /// {@template puzzle_theme}
 /// Template for creating custom puzzle UI.
 /// {@endtemplate}
+// ignore: must_be_immutable
 abstract class PuzzleTheme extends Equatable {
   PuzzleTheme({List<String>? storyline, List<String>? endStory, List<String>? tips}) {
-    _tiles = ImageHelper.split(themeAsset, gridSize);
     this.storyline = storyline ?? [];
     this.endStory = endStory ?? [];
     this.tips = tips ?? [];
+    _tiles = [];
+    ImageHelper.splitWithRootBundle(themeAsset, gridSize).then((value) {
+      _tiles.addAll(value);
+    });
+  }
+
+  void setTiles(List<Uint8List> tiles) {
+    _tiles.clear();
+    _tiles.addAll(tiles);
   }
 
   // List of splitted tile images
@@ -29,6 +38,14 @@ abstract class PuzzleTheme extends Equatable {
   int get shuffleLine => storyline.length - 1;
 
   late final List<String> tips;
+
+  /// This string displays as the title in the dialog which gets shown when game ends.
+  String get winningToast;
+
+  String get incompleteToast;
+
+  // Grid Size
+  int gridSize = 4;
 
   /// The display name of this theme.
   String get name;
@@ -129,9 +146,6 @@ abstract class PuzzleTheme extends Equatable {
   ///
   /// Used for building sections of the puzzle UI.
   PuzzleLayoutDelegate get layoutDelegate => const MyPuzzleLayout();
-
-  // Grid Size
-  int get gridSize => 4;
 
   Uint8List assetForTile(int tile) => _tiles.elementAt(tile - 1);
 

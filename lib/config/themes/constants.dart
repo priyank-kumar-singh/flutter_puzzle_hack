@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../constants/const.dart';
+
 abstract class ThemeConstants {
   static const errorColor = Colors.redAccent;
   static const snackBarActionColor = Colors.purple;
@@ -130,7 +132,7 @@ abstract class ThemeConstants {
   }
 
   static const _baseTextStyle = TextStyle(
-    fontFamily: 'GoogleSans',
+    fontFamily: FontFamily.googleSans,
     color: Colors.black,
     fontWeight: FontWeight.w400,
   );
@@ -154,12 +156,6 @@ abstract class ThemeConstants {
 
   /// Grey 3
   static const Color grey3 = Color(0xFFE8EAED);
-
-  /// Grey 4
-  static const Color grey4 = Color(0xFFF1F3F4);
-
-  /// Grey 5
-  static const Color grey5 = Color(0xFFF8F9FA);
 
   // White 2 (opacity 40%)
   static const Color white2 = Color(0x66FFFFFF);

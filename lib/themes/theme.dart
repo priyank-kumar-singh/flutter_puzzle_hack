@@ -4,6 +4,7 @@ import 'package:flutter_puzzle_hack/puzzle/puzzle.dart';
 
 export 'halloween.dart';
 
+// ignore: must_be_immutable
 abstract class ThemeX extends PuzzleTheme {
   ThemeX() : super();
 

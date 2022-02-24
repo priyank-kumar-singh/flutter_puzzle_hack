@@ -4,6 +4,7 @@ import 'package:flutter_puzzle_hack/constants/const.dart';
 
 import 'theme.dart';
 
+// ignore: must_be_immutable
 class Halloween extends ThemeX {
   Halloween() : super() {
     storyline.addAll([
@@ -27,6 +28,12 @@ class Halloween extends ThemeX {
 
   @override
   String get name => 'Halloween';
+
+  @override
+  String get winningToast => 'Hooray! You freed the ghost';
+
+  @override
+  String get incompleteToast => 'Hey! I\'m waiting for you. Help!';
 
   @override
   String semanticsLabel(BuildContext context) => context.l10n.halloweenSemanticsLabel;

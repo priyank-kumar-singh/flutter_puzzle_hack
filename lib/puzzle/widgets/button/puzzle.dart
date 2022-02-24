@@ -13,7 +13,10 @@ class PuzzleButton extends StatelessWidget {
     required this.onPressed,
     this.backgroundColor,
     this.textColor,
+    this.boxDecoration,
   }) : super(key: key);
+
+  final BoxDecoration? boxDecoration;
 
   /// The background color of this button.
   /// Defaults to [PuzzleTheme.buttonColor].
@@ -35,9 +38,10 @@ class PuzzleButton extends StatelessWidget {
     final buttonTextColor = textColor ?? Colors.white;
     final buttonBackgroundColor = backgroundColor ?? theme.buttonColor;
 
-    return SizedBox(
+    return Container(
       width: 145,
       height: 44,
+      decoration: boxDecoration,
       child: AnimatedTextButton(
         duration: PuzzleAnimation.textStyle,
         style: TextButton.styleFrom(

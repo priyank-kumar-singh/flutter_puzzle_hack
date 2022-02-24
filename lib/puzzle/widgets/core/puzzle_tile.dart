@@ -75,7 +75,7 @@ class PuzzleTileState extends State<PuzzleTile>
     // to avoid dropping frames when the theme is changed.
     _timer = Timer(const Duration(seconds: 1), () {
       _audioPlayer = widget._audioPlayerFactory()
-        ..setAsset('assets/audio/tile_move.mp3');
+        ..setAsset(Assets.audio.tileMove);
     });
   }
 
@@ -115,17 +115,17 @@ class PuzzleTileState extends State<PuzzleTile>
         child: ResponsiveLayoutBuilder(
           small: (_, child) => SizedBox.square(
             key: Key('puzzle_tile_small_${widget.tile.value}'),
-            dimension: _TileSize.small,
+            dimension: _TileSize.small * 4 / theme.gridSize,
             child: child,
           ),
           medium: (_, child) => SizedBox.square(
             key: Key('puzzle_tile_medium_${widget.tile.value}'),
-            dimension: _TileSize.medium,
+            dimension: _TileSize.medium * 4 / theme.gridSize,
             child: child,
           ),
           large: (_, child) => SizedBox.square(
             key: Key('puzzle_tile_large_${widget.tile.value}'),
-            dimension: _TileSize.large,
+            dimension: _TileSize.large * 4 / theme.gridSize,
             child: child,
           ),
           child: (_) => MouseRegion(

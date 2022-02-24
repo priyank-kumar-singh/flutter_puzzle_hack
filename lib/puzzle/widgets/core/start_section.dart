@@ -5,10 +5,11 @@ import 'package:flutter_puzzle_hack/util/utils.dart';
 
 import '../../bloc/puzzle_bloc.dart';
 import '../../provider/provider.dart';
-import 'action_button.dart';
+import '../button/action_button.dart';
 import 'number_of_moves_and_tiles_left.dart';
-import 'name.dart';
+import 'theme_name.dart';
 import '../timer/timer.dart';
+import '../button/share_button.dart';
 
 /// {@template start_section}
 /// Displays the start section of the puzzle based on [state].
@@ -33,7 +34,7 @@ class StartSection extends StatelessWidget {
       children: [
         const ResponsiveGap(
           small: 20,
-          medium: 83,
+          medium: 30,
           large: 151,
         ),
         PuzzleName(
@@ -60,6 +61,16 @@ class StartSection extends StatelessWidget {
           small: (_, __) => const SizedBox(),
           medium: (_, __) => const SizedBox(),
           large: (_, __) => const PuzzleActionButton(),
+        ),
+        const ResponsiveGap(
+          small: 8,
+          medium: 18,
+          large: 32,
+        ),
+        ResponsiveLayoutBuilder(
+          small: (_, __) => const SizedBox(),
+          medium: (_, __) => const SizedBox(),
+          large: (_, __) => const PuzzleShareButton(),
         ),
         ResponsiveLayoutBuilder(
           small: (_, __) => const TimerView(),

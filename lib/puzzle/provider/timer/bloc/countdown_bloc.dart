@@ -22,6 +22,7 @@ class CountdownBloc
     on<CountdownTicked>(_onCountdownTicked);
     on<CountdownStopped>(_onCountdownStopped);
     on<CountdownReset>(_onCountdownReset);
+    on<CountdownCompleteReset>(_onCountdownCompleteReset);
   }
 
   /// The number of seconds before the puzzle is started.
@@ -90,6 +91,16 @@ class CountdownBloc
       state.copyWith(
         isCountdownRunning: true,
         secondsToBegin: event.secondsToBegin ?? secondsToBegin,
+      ),
+    );
+  }
+
+  void _onCountdownCompleteReset(CountdownCompleteReset event, Emitter<CountdownState> emit) {
+    _tickerSubscription?.cancel();
+    emit(
+      state.copyWith(
+        isCountdownRunning: false,
+        secondsToBegin: secondsToBegin,
       ),
     );
   }

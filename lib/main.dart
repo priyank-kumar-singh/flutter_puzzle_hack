@@ -58,9 +58,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  /// The path to local assets folder.
-  static const localAssetsPrefix = 'assets/';
-
   late final PlatformHelper _platformHelper;
   late final Timer _timer;
 
@@ -71,7 +68,7 @@ class _MyAppState extends State<MyApp> {
     _platformHelper = widget._platformHelperFactory();
 
     if (_platformHelper.isWeb) {
-      final assets = [
+      final pictures = [
         Assets.images.halloween.ghost,
         Assets.icons.volumeOn,
         Assets.icons.volumeOff,
@@ -91,7 +88,7 @@ class _MyAppState extends State<MyApp> {
       ];
 
       _timer = Timer(const Duration(milliseconds: 20), () {
-        for (var asset in assets) {
+        for (var asset in pictures) {
           precacheImage(Image.asset(asset.path).image, context);
         }
         for (var asset in assetsMemory) {
@@ -106,7 +103,7 @@ class _MyAppState extends State<MyApp> {
     if (_platformHelper.isWeb) {
       // We rely on browser caching here. Once the browser downloads the file,
       // the native implementation should be able to access it from cache.
-      await http.get(Uri.parse('$localAssetsPrefix$filePath'));
+      await http.get(Uri.parse('${AssetPath.assets}$filePath'));
       return;
     }
     throw UnimplementedError(

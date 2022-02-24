@@ -19,6 +19,10 @@ class CountdownStopped extends CountdownEvent {
   const CountdownStopped();
 }
 
+class CountdownCompleteReset extends CountdownEvent {
+  const CountdownCompleteReset();
+}
+
 class CountdownReset extends CountdownEvent {
   const CountdownReset({this.secondsToBegin});
 

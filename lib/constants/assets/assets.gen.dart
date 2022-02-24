@@ -87,6 +87,9 @@ class $AssetsRiveGen {
   /// File path: assets/rive/halloween_moon.riv
   RiveGenImage get halloweenMoon =>
       const RiveGenImage('assets/rive/halloween_moon.riv');
+
+  /// File path: assets/rive/zombie.riv
+  RiveGenImage get zombie => const RiveGenImage('assets/rive/zombie.riv');
 }
 
 class $AssetsImagesHalloweenGen {

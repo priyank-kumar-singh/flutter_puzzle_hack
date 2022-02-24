@@ -7,6 +7,7 @@ import 'package:flutter_puzzle_hack/puzzle/provider/provider.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 
 import '../../bloc/puzzle_bloc.dart';
+import '../dialog/dialog_share.dart';
 
 /// {@template puzzle_board}
 /// Displays the board of the puzzle in a [Stack] filled with [tiles].
@@ -36,32 +37,14 @@ class _MyPuzzleBoardState extends State<MyPuzzleBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final anchor = context.select((RiveAnchorBloc bloc) => bloc.state.status);
+
     return BlocListener<PuzzleBloc, PuzzleState>(
       listener: (context, state) async {
         if (state.puzzleStatus == PuzzleStatus.complete) {
           context.read<RiveAnchorBloc>().add(const RiveAnchorStoryForward());
-          _completePuzzleTimer =
-              Timer(const Duration(milliseconds: 370), () async {
-            // await showAppDialog<void>(
-            //   context: context,
-            //   child: MultiBlocProvider(
-            //     providers: [
-            //       BlocProvider.value(
-            //         value: context.read<MyThemeBloc>(),
-            //       ),
-            //       BlocProvider.value(
-            //         value: context.read<PuzzleBloc>(),
-            //       ),
-            //       BlocProvider.value(
-            //         value: context.read<TimerBloc>(),
-            //       ),
-            //       BlocProvider.value(
-            //         value: context.read<AudioControlBloc>(),
-            //       ),
-            //     ],
-            //     child: const ShareDialog(),
-            //   ),
-            // );
+          Timer(const Duration(milliseconds: 370), () async {
+              showShareDialog(context);
           });
         }
       },
@@ -69,12 +52,28 @@ class _MyPuzzleBoardState extends State<MyPuzzleBoard> {
         small: (_, child) => SizedBox.square(
           key: const Key('puzzle_board_small'),
           dimension: BoardSize.small,
-          child: child,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            reverseDuration: const Duration(milliseconds: 1000),
+            child: Visibility(
+              visible: (anchor != RiveAnchorStatus.idle && anchor != RiveAnchorStatus.flyingIdle),
+              child: RiveAnchor(key: Keys.anchorKey),
+              replacement: child!,
+            ),
+          ),
         ),
         medium: (_, child) => SizedBox.square(
           key: const Key('puzzle_board_medium'),
           dimension: BoardSize.medium,
-          child: child,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            reverseDuration: const Duration(milliseconds: 1000),
+            child: Visibility(
+              visible: (anchor != RiveAnchorStatus.idle && anchor != RiveAnchorStatus.flyingIdle),
+              child: RiveAnchor(key: Keys.anchorKey),
+              replacement: child!,
+            ),
+          ),
         ),
         large: (_, child) => SizedBox.square(
           key: const Key('puzzle_board_large'),

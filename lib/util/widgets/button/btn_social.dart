@@ -8,7 +8,7 @@ class SocialMediaButton extends InkWell {
     SocialMediaIcons iconData, {
     Key? key,
     String? url,
-    bool mini = false,
+    bool mini = true,
     bool constrainMinWidth = true,
     double? iconSize,
     double? iconBorderRadius,
@@ -40,9 +40,9 @@ class SocialMediaButton extends InkWell {
                           image: AssetImage(
                               '${AssetPath.icons}${icon.toLowerCase()}.png')),
                     ),
-                    iconSize: iconSize ?? 24.0,
+                    iconSize: iconSize ?? 28.0,
                     splashRadius: splashRadius,
-                    onPressed: null,
+                    onPressed: !mini ? null : (onTap ?? (url == null ? null : () async => await URLHelper.launch(url))),
                   ),
                   Visibility(
                     visible: !mini,
@@ -61,10 +61,7 @@ class SocialMediaButton extends InkWell {
               ),
             );
           }),
-          onTap: onTap ??
-              (url == null
-                  ? null
-                  : () async => await URLHelper.launch(url)),
+          onTap: mini ? null : (onTap ?? (url == null ? null : () async => await URLHelper.launch(url))),
           onLongPress: onLongPress,
           onHover: onHover,
           onHighlightChanged: onHighlightChanged,

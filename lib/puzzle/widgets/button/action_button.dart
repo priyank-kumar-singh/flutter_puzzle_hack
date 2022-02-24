@@ -10,7 +10,7 @@ import 'package:just_audio/just_audio.dart';
 import '../../bloc/puzzle_bloc.dart';
 import '../../provider/provider.dart';
 import '../../theme/theme.dart';
-import '../button/puzzle.dart';
+import 'puzzle.dart';
 
 /// {@template puzzle_action_button}
 /// Displays the action button to start or shuffle the puzzle
@@ -51,9 +51,9 @@ class _PuzzleActionButtonState
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     final status = context.select((RiveAnchorBloc bloc) => bloc.state.status);
 
-    final isLoading = status == RiveAnchorStatus.flying;
+    final isLoading = status == RiveAnchorStatus.flying || status == RiveAnchorStatus.starting;
     final isStarted = status == RiveAnchorStatus.flyingIdle;
-    final isEnding = status == RiveAnchorStatus.backToLaszlow;
+    final isEnding = status == RiveAnchorStatus.backToLaszlow || status == RiveAnchorStatus.ending;
     final isExit = status == RiveAnchorStatus.exit;
 
     final text = isStarted
@@ -75,7 +75,7 @@ class _PuzzleActionButtonState
           message: isStarted ? context.l10n.restartTooltip : '',
           verticalOffset: 40,
           child: PuzzleButton(
-            onPressed: isLoading || isEnding
+            onPressed: isLoading || isEnding || isExit
                 ? null
                 : () async {
                     // Reset timer
@@ -85,7 +85,6 @@ class _PuzzleActionButtonState
                     if (isStarted) {
                       context.read<PuzzleBloc>().add(const PuzzleInitialized(shufflePuzzle: false));
                     }
-
                     unawaited(_audioPlayer.replay());
                   },
             textColor: isLoading ? theme.defaultColor : null,

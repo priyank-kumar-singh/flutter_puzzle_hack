@@ -1,12 +1,30 @@
-import 'dart:io';
+// import 'dart:io';
+import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
+// import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as imglib;
 
 class ImageHelper {
-  static List<Uint8List> split(String input, int gridSize) {
-    final image = imglib.decodeImage(File(input).readAsBytesSync())!;
+  ImageHelper._();
+  // static Future<List<Uint8List>> splitWithHTTPParse(String input, int gridSize) async {
+  //   final List<int> byteImage = await http.readBytes(Uri.parse(input));
+  //   return _split(byteImage, gridSize);
+  // }
+
+  static Future<List<Uint8List>> splitWithRootBundle(String input, int gridSize) async {
+    final data = await rootBundle.load(input).then((value) => value.buffer.asUint8List());
+    return _split(data, gridSize);
+  }
+
+  // static List<Uint8List> splitWithDartIO(String input, int gridSize) {
+  //   return _split(File(input).readAsBytesSync(), gridSize);
+  // }
+
+  static List<Uint8List> _split(List<int> byteImage, int gridSize) {
+    final image = imglib.decodePng(byteImage)!;
     final width = (image.width / gridSize).round();
     final height = (image.height / gridSize).round();
 

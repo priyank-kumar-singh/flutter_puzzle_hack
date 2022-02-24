@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:rive/rive.dart';
 
 import '../../../theme/theme.dart';
+import '../../../widgets/widgets.dart';
 
 class RiveAnchor extends StatefulWidget {
   const RiveAnchor({
@@ -40,7 +42,8 @@ class _RiveAnchorState extends State<RiveAnchor> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _audioPlayer = widget._audioPlayerFactory();
+    _audioPlayer = widget._audioPlayerFactory()
+      ..setAsset(Assets.audio.click);
     controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 5000),
@@ -59,109 +62,114 @@ class _RiveAnchorState extends State<RiveAnchor> with SingleTickerProviderStateM
     final theme = context.read<ThemeBloc>().state.theme;
     final background = context.select((RiveBackgroundBloc bloc) => bloc.state is RivebackgroundFinal);
     final state = context.select((RiveAnchorBloc bloc) => bloc.state);
-    final canShowTip = state.status == RiveAnchorStatus.flyingIdle;
 
-    return BlocListener<RiveAnchorBloc, RiveAnchorState>(
-      listener: (context, state) {
-        if (state.status == RiveAnchorStatus.flyingIdle) {
-          context.read<CountdownBloc>().add(const CountdownStarted());
-        } else if (state.status == RiveAnchorStatus.exit) {
-          controller
-            ..forward()
-            ..addListener(() {
-              if (controller.isCompleted) {
-                context.read<RiveBackgroundBloc>().add(const RiveBackgroundReset());
-                context.read<RiveAnchorBloc>().add(const RiveAnchorReset());
-                controller.reset();
-              }
-            });
-        }
-      },
-      child: ResponsiveLayoutBuilder(
-        small: (_, child) => child!,
-        medium: (_, child) => child!,
-        large: (_, child) => child!,
-        child: (currentSize) {
-          final isSmallSize = currentSize == ResponsiveLayoutSize.small;
-          final activeSize = isSmallSize
-              ? RiveAnchor._activeThemeSmallSize
-              : RiveAnchor._activeThemeNormalSize;
+    return AudioControlListener(
+      audioPlayer: _audioPlayer,
+      child: BlocListener<RiveAnchorBloc, RiveAnchorState>(
+        listener: (context, state) {
+          if (state.status == RiveAnchorStatus.flyingIdle) {
+            context.read<CountdownBloc>().add(const CountdownStarted());
+          } else if (state.status == RiveAnchorStatus.exit) {
+            controller
+              ..forward()
+              ..addListener(() {
+                if (controller.isCompleted) {
+                  context.read<RiveBackgroundBloc>().add(const RiveBackgroundReset());
+                  context.read<RiveAnchorBloc>().add(const RiveAnchorReset());
+                  controller.reset();
+                }
+              });
+          }
+        },
+        child: ResponsiveLayoutBuilder(
+          small: (_, child) => child!,
+          medium: (_, child) => child!,
+          large: (_, child) => child!,
+          child: (currentSize) {
+            final isSmallSize = currentSize == ResponsiveLayoutSize.small;
+            final activeSize = isSmallSize
+                ? RiveAnchor._activeThemeSmallSize
+                : RiveAnchor._activeThemeNormalSize;
 
-          final padding = isSmallSize ? 4.0 : 8.0;
-          return AnimatedSwitcher(
-            duration: PuzzleAnimation.puzzleTileScale,
-            child: !background
-                ? const SizedBox()
-                : Padding(
-                    padding: EdgeInsets.only(left: padding),
-                    child: Column(
-                      children: [
-                        _AnchorMessageBubble(
-                          size: activeSize,
-                          showAttachment: showTip && canShowTip && tipIndex == 0,
-                          message: showTip && canShowTip ? theme.tips[tipIndex] : null,
-                          onNext: showTip && canShowTip ? () {
-                            if (++tipIndex == theme.tips.length) {
-                              setState(() => showTip = false);
-                            } else {
-                              setState(() {});
-                            }
-                          } : null,
-                        ),
-                        const Gap(48),
-                        InkWell(
-                          onTap: () {
-                            if (canShowTip && !showTip) {
-                              setState(() {
-                                showTip = true;
-                                tipIndex = 0;
-                              });
-                            } else if (showTip) {
-                              setState(() {
+            final padding = isSmallSize ? 4.0 : 8.0;
+            final canShowTip = state.status == RiveAnchorStatus.flyingIdle
+              && currentSize == ResponsiveLayoutSize.large;
+            return AnimatedSwitcher(
+              duration: PuzzleAnimation.puzzleTileScale,
+              child: !background
+                  ? const SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.only(left: padding),
+                      child: Column(
+                        children: [
+                          _AnchorMessageBubble(
+                            size: activeSize,
+                            showAttachment: showTip && canShowTip && tipIndex == 0,
+                            message: showTip && canShowTip ? theme.tips[tipIndex] : null,
+                            onNext: showTip && canShowTip ? () {
+                              if (++tipIndex == theme.tips.length) {
                                 setState(() => showTip = false);
-                              });
-                            }
-                          },
-                          child: AnimatedBuilder(
-                            animation: controller,
-                            builder: (context, child) {
-                              return Transform(
-                                alignment: Alignment.center,
-                                transform: Matrix4
-                                  .rotationY(theme.mirrorAnchorAsset ? pi : 0)
-                                  ..rotateX(animation.rotateX.value * pi)
-                                  ..rotateZ(animation.rotateZ.value * pi)
-                                  ..scale((state.status == RiveAnchorStatus.idle ||
-                                          state.status ==
-                                              RiveAnchorStatus.backToLaszlow)
-                                      ? 3.0
-                                      : 3.0)
-                                  ..translate(
-                                    animation.xAxis.value,
-                                    animation.yAxis.value,
-                                  ),
-                                child: child,
-                              );
+                              } else {
+                                unawaited(_audioPlayer.replay());
+                                setState(() {});
+                              }
+                            } : null,
+                          ),
+                          const Gap(48),
+                          InkWell(
+                            onTap: () {
+                              if (canShowTip && !showTip) {
+                                setState(() {
+                                  showTip = true;
+                                  tipIndex = 0;
+                                });
+                              } else if (showTip) {
+                                setState(() {
+                                  setState(() => showTip = false);
+                                });
+                              }
                             },
-                            child: SizedBox(
-                              width: activeSize,
-                              height: activeSize,
-                              child: RiveAnimation.asset(
-                                theme.anchorAsset,
-                                stateMachines: const ['state_machine'],
-                                fit: BoxFit.fill,
-                                onInit: context
-                                    .read<RiveAnchorBloc>()
-                                    .registerTriggers,
+                            child: AnimatedBuilder(
+                              animation: controller,
+                              builder: (context, child) {
+                                return Transform(
+                                  alignment: Alignment.center,
+                                  transform: Matrix4
+                                    .rotationY(theme.mirrorAnchorAsset ? pi : 0)
+                                    ..rotateX(animation.rotateX.value * pi)
+                                    ..rotateZ(animation.rotateZ.value * pi)
+                                    ..scale((state.status == RiveAnchorStatus.idle ||
+                                            state.status ==
+                                                RiveAnchorStatus.backToLaszlow)
+                                        ? 3.0
+                                        : 3.0)
+                                    ..translate(
+                                      animation.xAxis.value,
+                                      animation.yAxis.value,
+                                    ),
+                                  child: child,
+                                );
+                              },
+                              child: SizedBox(
+                                width: activeSize,
+                                height: activeSize,
+                                child: RiveAnimation.asset(
+                                  theme.anchorAsset,
+                                  stateMachines: const ['state_machine'],
+                                  fit: BoxFit.fill,
+                                  onInit: context
+                                      .read<RiveAnchorBloc>()
+                                      .registerTriggers,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -181,29 +189,6 @@ class _AnchorMessageBubble extends StatelessWidget {
   final String? message;
   final VoidCallback? onNext;
 
-  void showThemeAsset(BuildContext context) {
-    showAppDialog(
-      context: context,
-      useDefaultConstraints: false,
-      child: Column(
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(kTileBorderRadius)),
-                child: Image.asset(
-                  context.read<ThemeBloc>().state.theme.themeAsset,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
@@ -220,54 +205,64 @@ class _AnchorMessageBubble extends StatelessWidget {
 
     return text == null
         ? const SizedBox()
-        : ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: size * 1.8,
-            ),
-            child: MessageBubble(
-              key: const Key('anchor_message'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildMessage(text),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        buildButton(text: context.l10n.next, onPressed: () {
-                          if (message == null) {
-                            context
-                            .read<RiveAnchorBloc>()
-                            .add(const RiveAnchorStoryForward());
-                          } else {
-                            onNext!();
-                          }
-                        }),
-                        if (showAttachment) ...[
-                          const Gap(8.0),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2.0,
-                              ),
-                              borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                            ),
-                            padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
-                            margin: const EdgeInsets.only(left: 4.0),
-                            child: buildButton(text: context.l10n.view, onPressed: () {
-                              showThemeAsset(context);
+        : ResponsiveLayoutBuilder(
+          small: (_, child) => child!,
+          medium: (_, child) => child!,
+          large: (_, child) => child!,
+          child: (layout) {
+            final sf = layout == ResponsiveLayoutSize.large ? 1.8
+                    : layout == ResponsiveLayoutSize.medium ? 3.2
+                    : 2.8;
+            return ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: size * sf,
+                ),
+                child: MessageBubble(
+                  key: const Key('anchor_message'),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      buildMessage(text),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            buildButton(text: context.l10n.next, onPressed: () {
+                              if (message == null) {
+                                context
+                                .read<RiveAnchorBloc>()
+                                .add(const RiveAnchorStoryForward());
+                              } else {
+                                onNext!();
+                              }
                             }),
-                          ),
-                        ]
-                      ],
-                    ),
+                            if (showAttachment) ...[
+                              const Gap(8.0),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 2.0),
+                                margin: const EdgeInsets.only(left: 4.0),
+                                child: buildButton(text: context.l10n.view, onPressed: () {
+                                  showThemeAsset(context);
+                                }),
+                              ),
+                            ]
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          );
+                ),
+              );
+          }
+        );
   }
 
   MouseRegion buildButton({required String text, required VoidCallback onPressed}) {
@@ -277,7 +272,7 @@ class _AnchorMessageBubble extends StatelessWidget {
         onTap: onPressed,
         child: Text(
           text,
-          style: ThemeConstants.bodyXSmall.copyWith(
+          style: ThemeConstants.label.copyWith(
             color: Colors.blue,
           ),
         ),

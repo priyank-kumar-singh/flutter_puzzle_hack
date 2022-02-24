@@ -15,7 +15,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     on<PuzzleReset>(_onPuzzleReset);
   }
 
-  final int _size;
+  int _size;
 
   final Random? random;
 
@@ -23,6 +23,7 @@ class PuzzleBloc extends Bloc<PuzzleEvent, PuzzleState> {
     PuzzleInitialized event,
     Emitter<PuzzleState> emit,
   ) {
+    _size = event.gridSize ?? _size;
     final puzzle = _generatePuzzle(_size, shuffle: event.shufflePuzzle);
     emit(
       PuzzleState(

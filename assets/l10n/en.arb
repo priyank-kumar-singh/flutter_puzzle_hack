@@ -16,11 +16,11 @@
     "@restartTooltip": {
         "description": "Shown as a tooltip for the puzzle restart button"
     },
-    "numberOfMoves": "Moves",
+    "moves": "Moves",
     "@numberOfMoves": {
         "description": "Indicates how many moves have been made on the current puzzle"
     },
-    "numberOfTilesLeft": "Tiles",
+    "tiles": "Tiles",
     "@numberOfTilesLeft": {
         "description": "Indicates how many puzzle tiles are not in their correct position"
     },
@@ -52,6 +52,8 @@
     "@view": {
         "description": "Shown as a button for viewing attached tip"
     },
+    "help": "Help",
+    "time": "Time",
     "countdownGo": "GO!",
     "@countdownGo": {
         "description": "Shown when the countdown has just finished and the puzzle is about to start"
@@ -106,5 +108,19 @@
             }
         }
     },
-    "halloweenSemanticsLabel": "Gia the Ghost"
+    "halloweenSemanticsLabel": "Gia the Ghost",
+    "puzzleSettings": "Puzzle Settings",
+    "puzzleGame": "Puzzle Game",
+    "puzzleTheme": "Puzzle Theme",
+    "soundEffects": "Sound Effects",
+    "soundEffectsOn": "On",
+    "soundEffectsOff": "Off",
+    "gridSize": "Grid Size",
+    "note": "Note",
+    "noteSettings": "Changing Theme or Grid Size will reset the game",
+    "share": "Share",
+    "shareMessage": "My pet zombie need some more brains to eat. Will you please bring some. Just share this game with your friends and bring them here.",
+    "linkCopied": "Link copied to clipboard",
+    "followme": "Follow me-",
+    "copyLink": "Copy to clipboard"
 }

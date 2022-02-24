@@ -11,13 +11,15 @@ class _PuzzleHeader extends StatelessWidget {
         small: (context, child) => Stack(
           children: [
             const Align(
-              child: AppTitle(),
+              child: HeaderTitle(),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.only(right: 34),
-                child: AudioControl(key: Keys.audioControlKey),
+                child: SettingsMenuButton(
+                  key: Keys.settingsBtnKey,
+                ),
               ),
             ),
           ],
@@ -29,7 +31,7 @@ class _PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              AppTitle(),
+              HeaderTitle(),
               _PuzzleMenu(),
             ],
           ),
@@ -41,7 +43,7 @@ class _PuzzleHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              AppTitle(),
+              HeaderTitle(),
               _PuzzleMenu(),
             ],
           ),

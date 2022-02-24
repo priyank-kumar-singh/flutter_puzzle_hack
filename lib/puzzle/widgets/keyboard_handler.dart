@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_puzzle_hack/constants/const.dart';
 import 'package:flutter_puzzle_hack/models/models.dart';
 import 'package:flutter_puzzle_hack/util/utils.dart';
 import 'package:just_audio/just_audio.dart';
@@ -44,7 +45,7 @@ class _PuzzleKeyboardHandlerState extends State<PuzzleKeyboardHandler> {
   void initState() {
     super.initState();
     _audioPlayer = widget._audioPlayerFactory()
-      ..setAsset('assets/audio/tile_move.mp3');
+      ..setAsset(Assets.audio.tileMove);
   }
 
   @override

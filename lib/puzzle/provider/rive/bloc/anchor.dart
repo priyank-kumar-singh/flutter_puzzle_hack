@@ -26,7 +26,12 @@ class RiveAnchorBloc extends Bloc<RiveAnchorEvent, RiveAnchorState> {
     _play?.fire();
   }
 
+  void playFire() {
+    _play?.fire();
+  }
+
   void _onAnchorFly(RiveAnchorPlay event, Emitter<RiveAnchorState> emit) async {
+    emit(const RiveAnchorState(status: RiveAnchorStatus.starting));
     if (state.status == RiveAnchorStatus.flying || state.status == RiveAnchorStatus.flyingIdle) {
       emit(const RiveAnchorState());
       _restart?.fire();
@@ -54,6 +59,7 @@ class RiveAnchorBloc extends Bloc<RiveAnchorEvent, RiveAnchorState> {
         emit(state.from(index: state.diagIndex + 1));
       }
     } else if (state.status == RiveAnchorStatus.flyingIdle) {
+      emit(const RiveAnchorState(status: RiveAnchorStatus.ending));
       _reset?.fire();
       await Future.delayed(const Duration(milliseconds: 2000));
       emit(state.from(index: 0, status: RiveAnchorStatus.backToLaszlow));
@@ -91,7 +97,7 @@ class RiveAnchorStoryForward extends RiveAnchorEvent {
 
 
 // Rive Anchor States
-enum RiveAnchorStatus {idle, flying, flyingIdle, backToLaszlow, exit}
+enum RiveAnchorStatus {idle, starting, flying, flyingIdle, ending, backToLaszlow, exit}
 
 class RiveAnchorState extends Equatable {
   const RiveAnchorState({this.diagIndex = -1, this.status = RiveAnchorStatus.idle});

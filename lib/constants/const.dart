@@ -8,15 +8,21 @@ export 'keys.dart';
 
 /// Breakpoints for different screen layouts
 abstract class Breakpoints {
-  static const double small = 576;
-  static const double medium = 1200;
-  static const double large = 1440;
+  static const small = 576;
+  static const medium = 1200;
+  static const large = 1440;
 }
 
 abstract class BoardSize {
-  static double small = 312;
-  static double medium = 424;
-  static double large = 472;
+  static const small = 312.0;
+  static const medium = 424.0;
+  static const large = 472.0;
+}
+
+abstract class TileFontSize {
+  static const small = 36.0;
+  static const medium = 50.0;
+  static const large = 54.0;
 }
 
 abstract class PuzzleAnimation {
@@ -26,10 +32,12 @@ abstract class PuzzleAnimation {
   static const puzzleTileScale = Duration(milliseconds: 230);
 }
 
-abstract class TileFontSize {
-  static double small = 36;
-  static double medium = 50;
-  static double large = 54;
+abstract class SocialMediaLinks {
+  static const github = 'https://www.github.com/priyank-kumar-singh';
+  static const linkedin = 'https://www.linkedin.com/in/priyank-kumar-singh-705';
+  static const twitter = 'https://www.twitter.com/priyankkumars18';
+  static const youtube = 'https://www.youtube.com/channel/UCNdptkGGmUsmjuIL8sQ5NpA';
+  static const slidePuzzle = 'https://slide-puzzle-6ac4a.web.app/';
 }
 
 const kHeaderButtonSize_small = 24.0;

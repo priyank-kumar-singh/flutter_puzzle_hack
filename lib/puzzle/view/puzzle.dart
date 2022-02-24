@@ -80,8 +80,8 @@ class _PuzzleView extends StatelessWidget {
     final theme = context.select((ThemeBloc bloc) => bloc.state.theme);
     context.read<RiveAnchorBloc>().registerStoryCount(theme.storyline.length, theme.endStory.length);
 
-    return Scaffold(
-      body: AnimatedContainer(
+    return Material(
+      child: AnimatedContainer(
         duration: PuzzleAnimation.backgroundColorChange,
         decoration: BoxDecoration(color: theme.backgroundColor),
         child: MultiBlocProvider(
@@ -101,7 +101,6 @@ class _PuzzleView extends StatelessWidget {
           ),
         ),
       ),
-      endDrawer: const Drawer(),
     );
   }
 }
@@ -115,32 +114,36 @@ class _Puzzle extends StatelessWidget {
     final state = context.select((PuzzleBloc bloc) => bloc.state);
     final background = context.select((RiveBackgroundBloc bloc) => bloc.state is RivebackgroundFinal);
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          children: [
-            theme.layoutDelegate.backgroundBuilder(state),
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 2000),
-              reverseDuration: const Duration(milliseconds: 400),
-              child: !background ? null : SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: Column(
-                    children: const [
-                      _PuzzleHeader(),
-                      _PuzzleSections(),
-                    ],
+    return Scaffold(
+      endDrawer: const Drawer(key: Key('end_drawer'), child: SettingsDrawer()),
+      floatingActionButton: const FABHelp(key: Key('help_button')),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return Stack(
+            children: [
+              theme.layoutDelegate.backgroundBuilder(state),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 2000),
+                reverseDuration: const Duration(milliseconds: 400),
+                child: !background ? null : SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Column(
+                      children: const [
+                        _PuzzleHeader(),
+                        _PuzzleSections(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            theme.layoutDelegate.anchorBuilder(state),
-          ],
-        );
-      },
+              theme.layoutDelegate.anchorBuilder(state),
+            ],
+          );
+        },
+      ),
     );
   }
 }
