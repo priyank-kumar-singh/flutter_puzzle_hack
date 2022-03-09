@@ -1,6 +1,38 @@
 # Flutter Puzzle Hack 2K22
 
-References
+This application is not made from scratch but I have modified the existing sample slide puzzle codebase. See references for more info.
+
+What I have added in the existing codebase?
+1. &nbsp;Cool Animations
+2. &nbsp;Anchor, who guides a player throughout the game
+3. &nbsp;Stories
+4. &nbsp;And functionality to change grid size on the fly (Tile assets not required anymore).
+
+If you're reading this you probably wanna see a live version of the application. Just [click-here...](https://slide-puzzle-6ac4a.web.app/)
+
+<img align="left" src="readme/puzzle.png" height="330" width="79%"/>&ensp;<img src="readme/share.png" height="330" width="20%"/><br>
+
+## Test Locally
+I have used only [flutter_gen](https://pub.dev/packages/flutter_gen) package as an additional dependency which may require you setup some things. This package generates assets, so I won't make any mistakes typing their absolute paths to the assets directory. Its pretty easy to install [flutter_gen](https://pub.dev/packages/flutter_gen) package, just follow their installation docs.
+
+## Internalization
+This application can support multiple languages, but for now it supports only english. All application resource bundle files are placed inside *assets/l10n* folder.
+
+**Note:** Using VSCode and seeing linter errors for AppLocalizations? I faced this issue as well, just make sure you have ran <code>flutter pub get</code> command once, now either restart your *editor* or *restart dart analysis server* from command palette, and you're good to go.
+
+## Platforms
+<img align="right" src="readme/splash.png" height="100" width="100" style="margi-top: 5px;">
+I have successfully tested the application for the following platforms.
+
+1. &nbsp;Android 10 and 11
+2. &nbsp;Web - Edge, Chrome and Brave
+3. &nbsp;Desktop - Windows
+
+**Note:** Windows platform don't support *audio* with *just_audio* package for now.
+
+## References-
+Sample Puzzle Game: [flutter.github.io/samples/web/slide_puzzle](https://flutter.github.io/samples/web/slide_puzzle/) <br>
+Sample Codebase: [github.com/VGVentures/slide_puzzle](https://github.com/VGVentures/slide_puzzle)
 
 ## Find me around web: <img align="left" src="https://raw.githubusercontent.com/priyank-kumar-singh/priyank-kumar-singh/main/assets/hacker.png" height="150" width="150"/>
 

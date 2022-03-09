@@ -14,20 +14,11 @@ class $AssetsAudioGen {
   /// File path: assets/audio/click.mp3
   String get click => 'assets/audio/click.mp3';
 
-  /// File path: assets/audio/dumbbell.mp3
-  String get dumbbell => 'assets/audio/dumbbell.mp3';
-
-  /// File path: assets/audio/sandwich.mp3
-  String get sandwich => 'assets/audio/sandwich.mp3';
-
   /// File path: assets/audio/shuffle.mp3
   String get shuffle => 'assets/audio/shuffle.mp3';
 
   /// File path: assets/audio/skateboard.mp3
   String get skateboard => 'assets/audio/skateboard.mp3';
-
-  /// File path: assets/audio/success.mp3
-  String get success => 'assets/audio/success.mp3';
 
   /// File path: assets/audio/tile_move.mp3
   String get tileMove => 'assets/audio/tile_move.mp3';
@@ -36,23 +27,12 @@ class $AssetsAudioGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
-  /// File path: assets/icons/facebook.png
-  AssetGenImage get facebook =>
-      const AssetGenImage('assets/icons/facebook.png');
-
   /// File path: assets/icons/github.png
   AssetGenImage get github => const AssetGenImage('assets/icons/github.png');
-
-  /// File path: assets/icons/instagram.png
-  AssetGenImage get instagram =>
-      const AssetGenImage('assets/icons/instagram.png');
 
   /// File path: assets/icons/linkedin.png
   AssetGenImage get linkedin =>
       const AssetGenImage('assets/icons/linkedin.png');
-
-  /// File path: assets/icons/medium.png
-  AssetGenImage get medium => const AssetGenImage('assets/icons/medium.png');
 
   /// File path: assets/icons/timer.png
   AssetGenImage get timer => const AssetGenImage('assets/icons/timer.png');

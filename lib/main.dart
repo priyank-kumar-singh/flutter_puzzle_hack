@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import 'config/config.dart';
 import 'constants/const.dart';
-import 'puzzle/puzzle.dart';
+import 'modules/puzzle/puzzle.dart';
 import 'util/utils.dart';
 
 void main() {
@@ -76,20 +76,17 @@ class _MyAppState extends State<MyApp> {
 
       final assetsMemory = [
         Assets.audio.click,
-        Assets.audio.dumbbell,
-        Assets.audio.sandwich,
         Assets.audio.shuffle,
         Assets.audio.skateboard,
-        Assets.audio.success,
         Assets.audio.tileMove,
-
         Assets.rive.bat.path,
         Assets.rive.halloweenMoon.path,
+        Assets.rive.zombie.path,
       ];
 
       _timer = Timer(const Duration(milliseconds: 20), () {
         for (var asset in pictures) {
-          precacheImage(Image.asset(asset.path).image, context);
+          precacheImage(asset.image().image, context);
         }
         for (var asset in assetsMemory) {
           prefetchToMemory(asset);

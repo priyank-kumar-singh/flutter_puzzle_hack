@@ -8,8 +8,6 @@ export 'layout/responsive_gap.dart';
 export 'layout/responsive_layout_builder.dart';
 
 export 'ui/animations/explosion/anim.dart';
-export 'ui/animations/route_builder/anim.dart';
-export 'ui/animations/jumping_dots.dart';
 
 export 'ui/dialog/app_dialog.dart';
 
