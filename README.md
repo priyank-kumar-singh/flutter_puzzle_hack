@@ -10,10 +10,21 @@ What I have added in the existing codebase?
 
 If you're reading this you probably wanna see a live version of the application. Just [click-here...](https://slide-puzzle-6ac4a.web.app/)
 
-<img align="left" src="readme/puzzle.png" height="330" width="79%"/>&ensp;<img src="readme/share.png" height="330" width="20%"/><br>
+<img align="left" src="readme/puzzle.png" height="360" width="76%"/>&ensp;<img src="readme/share.png" height="360" width="20%"/><br>
 
 ## Test Locally
-I have used only [flutter_gen](https://pub.dev/packages/flutter_gen) package as an additional dependency which may require you setup some things. This package generates assets, so I won't make any mistakes typing their absolute paths to the assets directory. Its pretty easy to install [flutter_gen](https://pub.dev/packages/flutter_gen) package, just follow their installation docs.
+I have used only [flutter_gen](https://pub.dev/packages/flutter_gen) package as an additional dependency which may require you to setup some things. This package generates assets, so I won't make any mistakes typing their absolute paths to the assets directory. Its pretty easy to install [flutter_gen](https://pub.dev/packages/flutter_gen) package, just follow their installation docs.
+
+Environment Details-
+1. Windows 11
+2. SDK '>=2.16.0-134.5.beta <3.0.0'
+3. Flutter version 2.10.0-0.3.pre
+4. Dart version 2.16.0 (build 2.16.0-134.5.beta)
+
+If you're adding new assets you may want to generate Assets class for those assets like I did with flutter_gen package, just run following command from the root directory of the application.
+```
+flutter packages pub run build_runner build
+```
 
 ## Internalization
 This application can support multiple languages, but for now it supports only english. All application resource bundle files are placed inside *assets/l10n* folder.
@@ -21,7 +32,7 @@ This application can support multiple languages, but for now it supports only en
 **Note:** Using VSCode and seeing linter errors for AppLocalizations? I faced this issue as well, just make sure you have ran <code>flutter pub get</code> command once, now either restart your *editor* or *restart dart analysis server* from command palette, and you're good to go.
 
 ## Platforms
-<img align="right" src="readme/splash.png" height="100" width="100" style="margi-top: 5px;">
+<img align="right" src="readme/splash.png" height="150" width="150" style="margi-top: 5px;">
 I have successfully tested the application for the following platforms.
 
 1. &nbsp;Android 10 and 11
